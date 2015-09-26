@@ -28,12 +28,19 @@ include "parts/doctype.php";
 	<?php
 	include "parts/header.php"; // include header
 	include 'parts/breadcrumbs.php'; // include breadcrumbs
-	
-	// if the template exists then include, else show 404
+
+	// if the content file exists then include
+	if ($tp->content_exists()) {
+		include $tp->contentpath;
+	} else {
+		echo $tp->content . ' content partial does not exist';
+	}
+
+	// if the template exists then include, else say partial does not exist
 	if ($tp->template_exists()) {
 		include $tp->template . '.php';
 	} else {
-		echo $tp->template . ' partial does not exists';
+		echo $tp->template . ' template partial does not exists';
 	}
 
 	include "parts/footer.php"; // include footer
