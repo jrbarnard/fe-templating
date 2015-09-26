@@ -13,8 +13,9 @@
  *
  */
 
-global $template_path;
+global $template_path, $content_path;
 $template_path = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR; // template path
+$content_path = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR; // content path
 
 $structure = array(
 	"/" => array(
@@ -24,55 +25,49 @@ $structure = array(
 		"show-top-level" => true,
 		"breadcrumbs"	=> false
 	),
-	"top_level_1" => array(
-		"title" 	=> "Top Level 1",
+	"About" => array(
+		"title" 	=> "About",
 		"template" 	=> ""
 	),
-	"top_level_2" => array(
-		"title"		=> "Top Level 2",
-		"template" 	=> "",
+	"Locations" => array(
+		"title"		=> "Locations",
+		"template" 	=> "landing-standard",
+		"content"	=> "locations-landing",
 		"children" 	=> array(
-			"child_1" => array(
-				"title" 	=> "Child 1 of Top Level 2",
+			"location_1" => array(
+				"title" 	=> "Location 1",
 				"template" 	=> "",
 				"children" 	=> array(
-					"child_1" => array(
-						"title" 	=> "Child 1 of Child 1 of Top Level 2",
+					"further_info" => array(
+						"title" 	=> "Location 1 further info",
 						"template" 	=> ""
 					),
-					"child_2" => array(
-						"title" 	=> "Child 2 of Child 1 of Top Level 2",
+					"contact_info" => array(
+						"title" 	=> "Location 1 contact info",
 						"template" 	=> ""
 					)
 				)
 			),
-			"child_2" => array(
-				"title"		=> "Child 2 of Top Level 2",
+			"location_2" => array(
+				"title"		=> "Location 2",
 				"template"	=> ""
 			)
 		)
 	),
-	"top_level_3" => array(
-		"title"		=> "Top Level 3",
+	"staff" => array(
+		"title"		=> "Staff",
 		"template"	=> ""
 	),
-	"top_level_4" => array(
-		"title"		=> "Top Level 4",
+	"volunteers" => array(
+		"title"		=> "Volunteers",
 		"template"	=> ""
 	),
-	"top_level_5" => array(
-		"title"		=> "Top Level 5",
-		"template"	=> ""
-	),
-	"top_level_6" => array(
-		"title"		=> "Top Level 6",
-		"template"	=> ""
-	),
-	'top_level_7' => array(
-		"title"		=> "Top Level 7",
+	'contact_us' => array(
+		"title"		=> "Contact us",
 		"template"	=> "",
 		"hidden" => true,
-		"breadcrumbs"	=> false
+		"breadcrumbs"	=> false,
+		"show-top-level" => true
 	),
 	'sitemap' => array(
 		"title"		=> "Sitemap",

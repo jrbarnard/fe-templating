@@ -147,7 +147,9 @@ class Template {
 	/**
 	 * Method to build a uri based off a value in the uri structure
 	 *
-	 * @param $uri - CONTINUE HERE
+	 * @param $uri - the uri slug you want to build to (e.g test2)
+	 *
+	 * @return $uri string e.g /test/test2
 	 */
 	public function build_uri($uri, $uristring = '') {
 		//get index of uri in array
@@ -166,8 +168,13 @@ class Template {
 		}
 	}
 	
+
 	/**
 	 * Method to check if a template exists
+	 * 
+	 * @param $template name - defaults to the class property template if not set
+	 *
+	 * @return boolean depending on existence
 	 */
 	public function template_exists($template = "") {
 		if (empty($template)) {
@@ -178,9 +185,11 @@ class Template {
 		return file_exists($template_path . $template . '.php');
 	}
 	
+
 	/**
 	 * Method to get the parent uri of the current page
 	 *
+	 * @return string - uri slug for parent of current page
 	 */
 	private function get_parent() {
 		$parentindex = $this->pages - 2;
@@ -194,12 +203,19 @@ class Template {
 	/**
 	 * Method to build nav into markup
 	 *
+	 * @param array - structure to build off of - defaults to class property structure
+	 * @param string - the parent slug of the structure (for creating the correct linkable uri's)
+	 * @param boolean - whether to traverse all the levels of the structure
+	 * @param boolean - whether to honor the hidden setting of the nav in the structure
+	 * @param boolean - whether to show only valid links (so you check if the correct template exists before echoing out the nav) - NB: this is based purely on landing page and not on content yet
+	 *
+	 * @return string - nav markup
 	 */
 	public function build_nav($structure = array(), $parent = "", $alllevels = true, $honorhidden = true, $showonlyvalid = false) {
 		if (empty($structure)) {
 			$structure = $this->structure;
 		}
-		
+		ob_start();
 		// loop through structure ?>
 		<ul class="<?php if (!empty($parent)): echo 'subnav-contents'; endif; ?>">
 			<?php foreach ($structure as $uri => $values): ?>
@@ -216,7 +232,7 @@ class Template {
 							</div>
 							<?php
 								if ($children) {
-									$this->build_nav($values['children'], $parent . '/' . $uri);
+									echo $this->build_nav($values['children'], $parent . '/' . $uri);
 								}
 							?>
 						</li>
@@ -225,11 +241,16 @@ class Template {
 			<?php endforeach; // end build loop ?>
 		</ul>
 		<?php
+		return ob_get_clean();
 	}
 	
+
 	/**
 	 * Method to build site sitemap
 	 *
+	 * @param boolean - whether to show only pages in the sitemap which have corresponding templates (currently only based off templates, not content)
+	 * 
+	 * @return string - sitemap nav markup
 	 */
 	public function sitemap($showonlyvalid = false) {
 		// call build nav
@@ -237,12 +258,14 @@ class Template {
 			//empty string for parent
 			//true for alllevels
 			//false to not honor hidden
-		$this->build_nav(array(), "", true, false, $showonlyvalid);
+		return $this->build_nav(array(), "", true, false, $showonlyvalid);
 	}
 	
+
 	/**
 	 * Method to get top level nav only
 	 *
+	 * @return string - markup for top level nav
 	 */
 	public function toplevelnav() {
 		ob_start(); ?>
@@ -264,9 +287,13 @@ class Template {
 		return ob_get_clean();
 	}
 	
+
 	/**
 	 * Method to check if a uri is active
 	 *
+	 * @param string - uri to check if active
+	 *
+	 * @return boolean if it or a child is the current page
 	 */
 	private function is_active($uri) {
 		if (in_array($uri, $this->uri_structure)) {
@@ -276,9 +303,13 @@ class Template {
 		}
 	}
 	
+
 	/**
-	 * Method to check if a uri is current
+	 * Method to check if a uri is current page
 	 *
+	 * @param string - uri to check if it is the current page
+	 * 
+	 * @return boolean - if it is the current page uri
 	 */
 	private function is_current($uri) {
 		if ($uri == $this->currentpage->uri) {
@@ -291,6 +322,9 @@ class Template {
 	/**
 	 * Method to create class string for nav
 	 *
+	 * @param string - uri to check
+	 * 
+	 * @return string - classes to add
 	 */
 	public function get_classes($uri) {
 		if (empty($uri))
@@ -305,25 +339,33 @@ class Template {
 		return $classes;
 	}
 	
+
 	/**
 	 * Method to get uri of parent
+	 * NB: this is a duplication of a different way to get the parent uri as get_parent
+	 * THIS WILL BE DEPRECATED
 	 *
+	 * @return string - parent uri to current page
 	 */
 	public function get_parent_uri() {
 		return $this->parent->uri;
 	}
 	
+
 	/**
 	 * Method to get title of parent
 	 *
+	 * @return string - title of parent page
 	 */
 	public function get_parent_title() {
 		return $this->parent->page['title'];
 	}
 	
+
 	/**
 	 * Method to get breadcrumbs array for page
 	 *
+	 * @return array of breadcrumbs for the current page
 	 */
 	private function get_page_breadcrumbs() {
 		// check if currentpagedoesnt want breadcrumbs
@@ -341,9 +383,11 @@ class Template {
 		return $breadcrumbs;
 	}
 	
+
 	/**
 	 * Method to get breadcrumb markup for page
 	 *
+	 * @return string - breadcrumb markup
 	 */
 	public function get_page_breadcrumb_markup() {
 		// start recording output
@@ -376,6 +420,10 @@ class Template {
 
 /**
  * Function for formatted var dump
+ *
+ * @param contents to pretty dump
+ *
+ * @return n/a
  */
 function rr_d($contents) {
 	echo '<pre>';
