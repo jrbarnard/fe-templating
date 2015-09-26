@@ -1,6 +1,6 @@
 <?php
-$tempPath = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
-set_include_path($tempPath);
+$GLOBALS['tempPath'] = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
+set_include_path($GLOBALS['tempPath']);
 
 define('RRDEVELOPMENT', true);
 define('RRASSETS', '/assets/');
@@ -29,12 +29,12 @@ include "parts/doctype.php";
 	include "parts/header.php"; // include header
 	include 'parts/breadcrumbs.php'; // include breadcrumbs
 
-	// if the content file exists then include
-	if ($tp->content_exists()) {
-		include $tp->contentpath;
-	} else {
-		echo $tp->content . ' content partial does not exist';
-	}
+	// // if the content file exists then include
+	// if ($tp->content_exists()) {
+	// 	include $tp->contentpath;
+	// } else {
+	// 	echo $tp->content . ' content partial does not exist';
+	// }
 
 	// if the template exists then include, else say partial does not exist
 	if ($tp->template_exists()) {

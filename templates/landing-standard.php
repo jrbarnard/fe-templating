@@ -1,2 +1,2 @@
-<h2><?php $tp->get_var('title_1'); ?></h2>
-<p><?php $tp->get_var('desc_1'); ?></p>
+<h2>Landing title</h2>
+<p>landing description</p>

@@ -13,10 +13,6 @@
  *
  */
 
-global $template_path, $content_path;
-$template_path = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR; // template path
-$content_path = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR; // content path
-
 $structure = array(
 	"/" => array(
 		"title" 		=> "Home",
