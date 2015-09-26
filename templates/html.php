@@ -1,6 +1,6 @@
 <?php
 $GLOBALS['tempPath'] = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
-set_include_path($GLOBALS['tempPath']);
+// set_include_path($GLOBALS['tempPath']);
 
 define('RRDEVELOPMENT', true);
 define('RRASSETS', '/assets/');
@@ -23,29 +23,23 @@ include "parts/doctype.php";
 	?>
 </head>
 <body>
-	<?php include "parts/ga.php"; // include google analytics ?>
-	
 	<?php
+	include "parts/ga.php"; // include google analytics 
+
 	include "parts/header.php"; // include header
 	include 'parts/breadcrumbs.php'; // include breadcrumbs
 
-	// // if the content file exists then include
-	// if ($tp->content_exists()) {
-	// 	include $tp->contentpath;
-	// } else {
-	// 	echo $tp->content . ' content partial does not exist';
-	// }
+	// require twig
+	require_once APPDIR . 'Twig/Autoloader.php';
+	Twig_Autoloader::register();
 
-	// if the template exists then include, else say partial does not exist
-	if ($tp->template_exists()) {
-		include $tp->template . '.php';
-	} else {
-		echo $tp->template . ' template partial does not exists';
-	}
+	// store the location of the templates
+	$loader = new Twig_Loader_Filesystem($GLOBALS['tempPath']);
+	$twig = new Twig_Environment($loader); // create the environment
+	$twig->display($tp->template . '.php', $tp->content); // display the template passing in the content
+	
 
 	include "parts/footer.php"; // include footer
-	?>
-	
-	<?php include "parts/scripts.php"; // include javascript ?>
+	include "parts/scripts.php"; // include javascript ?>
 </body>
 </html>

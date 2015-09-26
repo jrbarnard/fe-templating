@@ -17,6 +17,7 @@ class Template {
 	public $parent; // parent object (parent page object including structure)
 	public $title = '404'; // title of page to load into head
 	public $breadcrumbs = array(); // breadcrumbs for current page
+	public $content = array();
 	
 	
 	function __construct($structure) {
@@ -36,6 +37,7 @@ class Template {
 		
 		// if current page has been found (not 404)
 		if ($this->currentpage !== false && $this->currentpage->page !== false) {
+			$this->content = $this->get_content();
 			$this->template = $this->currentpage->page['template']; // get template
 			$this->title = $this->currentpage->page['title']; // get title
 			$this->breadcrumbs = $this->get_page_breadcrumbs(); // get the breadcrumbs
@@ -415,18 +417,18 @@ class Template {
 		return ob_get_clean();
 	}
 
-	// private function get_content_file() {
-	// 	global $content_path;
-	// 	$this->content = isset($this->currentpage->page['content']) ? $this->currentpage->page['content'] : "";
-	// 	$this->contentpath = $content_path . $this->content . ".php";
-	// }
-
-	// public function content_exists() {
-	// 	if (!empty($this->content) && file_exists($this->contentpath))
-	// 		return true;
-	// 	else
-	// 		return false;
-	// }
+	/**
+	 * Method to get the content for a page
+	 *
+	 * @return array of variables
+	 */
+	private function get_content() {
+		$content = isset($this->currentpage->page['content']) ? $this->currentpage->page['content'] : "";
+		$filepath = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR . $content . '.php';
+		if (!empty($content) && file_exists($filepath)) {
+			return (include $filepath);
+		}
+	}
 }
 
 

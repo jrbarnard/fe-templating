@@ -1,5 +1,5 @@
 <?php
-
-
-$title_1 = "test";
-$desc_1 = "Test description";
+return array(
+	"title_landing"	=> "test",
+	"desc_landing"	=> "Test description"
+);
