@@ -427,7 +427,25 @@ class Template {
 		$filepath = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR . $content . '.php';
 		if (!empty($content) && file_exists($filepath)) {
 			return (include $filepath);
+		} else {
+			return array();
 		}
+	}
+
+	/**
+	 * Method to initiate twig and include templates/content
+	 *
+	 * @return n/a
+	 */
+	public function twig_init() {
+		// require twig
+		require_once APPDIR . 'Twig/Autoloader.php';
+		Twig_Autoloader::register();
+
+		// store the location of the templates
+		$loader = new Twig_Loader_Filesystem($GLOBALS['tempPath']);
+		$twig = new Twig_Environment($loader); // create the environment
+		$twig->display($this->template . '.php', $this->content); // display the template passing in the content
 	}
 }
 
