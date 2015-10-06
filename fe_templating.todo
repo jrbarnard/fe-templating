@@ -16,7 +16,7 @@ Front end templating todo:
     ☐ content page
     ☐ Twig
       ☐ Using variables
-        ✔ Ensuring we don't get errors if they don't exist (twig has isset?) @done (15-09-26 23:32)
+        ☐ Ensuring we don't get errors if they don't exist (twig has isset?)
       ☐ basic loops etc
   ☐ Content
     ☐ Defining variables for use
@@ -25,10 +25,3 @@ Front end templating todo:
       ☐ 2 types different content
     ☐ Content pages
       ☐ few different types with different mark up and how that works.
-
-Priorities:
-  ☐ refine usage of twig/content files
-    ☐ Allow people to use content directly in structure (check if array when getting content?)
-  ☐ Document how to use it properly includign twig and nav examples
-  ☐ Refine paths and using variables throughout (lots of hardcoded paths currently)
-  ☐ Get Twig cache to work

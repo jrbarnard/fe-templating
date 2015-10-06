@@ -1,2 +1,2 @@
-<h2>{{ title_landing }}</h2>
-<p>{{ desc_landing }}</p>
+<h2>Landing title</h2>
+<p>landing description</p>
