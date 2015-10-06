@@ -1,5 +1,5 @@
 <?php
 return array(
-	"title_landing"	=> "Locations",
-	"desc_landing"	=> "Locations landing page description"
+	"title_landing"	=> "test",
+	"desc_landing"	=> "Test description"
 );

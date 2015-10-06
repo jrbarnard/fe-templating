@@ -23,8 +23,7 @@ $structure = array(
 	),
 	"About" => array(
 		"title" 	=> "About",
-		"template" 	=> "landing-standard",
-		"content"	=> "about-landing"
+		"template" 	=> ""
 	),
 	"locations" => array(
 		"title"		=> "Locations",

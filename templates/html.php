@@ -29,8 +29,15 @@ include "parts/doctype.php";
 	include "parts/header.php"; // include header
 	include 'parts/breadcrumbs.php'; // include breadcrumbs
 
-	// Initiate twig
-	$tp->twig_init();
+	// require twig
+	require_once APPDIR . 'Twig/Autoloader.php';
+	Twig_Autoloader::register();
+
+	// store the location of the templates
+	$loader = new Twig_Loader_Filesystem($GLOBALS['tempPath']);
+	$twig = new Twig_Environment($loader); // create the environment
+	$twig->display($tp->template . '.php', $tp->content); // display the template passing in the content
+	
 
 	include "parts/footer.php"; // include footer
 	include "parts/scripts.php"; // include javascript ?>
