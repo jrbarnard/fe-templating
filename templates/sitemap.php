@@ -1,5 +1,9 @@
 <nav class="sitemap">
 	<h2>Sitemap</h2>
-	<?php //pass true if you only want pages with templates that exist to show in the list ?>
-	<?php echo $tp->sitemap(true); ?>
+	
+	<!-- Example of getting an attribute from the global template object (things like uri, title etc. See template-class.php for options) -->
+	{{ tp_attr('template') }}
+	
+	<!-- Example of getting the full sitemap -->
+	{{ sitemap(true) }}
 </nav>
