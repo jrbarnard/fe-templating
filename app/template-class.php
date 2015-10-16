@@ -182,9 +182,9 @@ class Template {
 	 * @return boolean depending on existence
 	 */
 	public function template_exists($template = "") {
-		if (empty($template)) {
-			$template = $this->template;
-		}
+		// if (empty($template)) {
+		// 	$template = $this->template;
+		// }
 		
 		return file_exists($GLOBALS['tempPath'] . $template . '.php');
 	}
@@ -236,7 +236,7 @@ class Template {
 							</div>
 							<?php
 								if ($children) {
-									echo $this->build_nav($values['children'], $parent . '/' . $uri);
+									echo $this->build_nav($values['children'], $parent . '/' . $uri, $alllevels, $honorhidden, $showonlyvalid);
 								}
 							?>
 						</li>

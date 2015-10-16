@@ -21,7 +21,7 @@ $structure = array(
 		"show-top-level" => true,
 		"breadcrumbs"	=> false
 	),
-	"About" => array(
+	"about" => array(
 		"title" 	=> "About",
 		"template" 	=> "landing-standard",
 		"content"	=> "about-landing"
@@ -69,7 +69,7 @@ $structure = array(
 	'sitemap' => array(
 		"title"		=> "Sitemap",
 		"template"	=> "sitemap",
-		"hidden" => true
+		// "hidden" => true
 	)
 )
 
