@@ -3,5 +3,5 @@
 
 
 <div class="wysiwyg">
-	{{ main_wysiwyg | raw}}
+	{{ main_wysiwyg | raw }}
 </div>

@@ -4,7 +4,6 @@
  * Class to build up your pages and structure based off a single structure file for your page structure
  *
  *
- *
  */
 class Template {
 	
@@ -38,7 +37,11 @@ class Template {
 		// if current page has been found (not 404)
 		if ($this->currentpage !== false && $this->currentpage->page !== false) {
 			$this->content = $this->get_content();
-			$this->template = $this->currentpage->page['template']; // get template
+			
+			// only set template if thereis one set
+			if (!empty($this->currentpage->page['template'])) {
+				$this->template = $this->currentpage->page['template'];	
+			}
 			$this->title = $this->currentpage->page['title']; // get title
 			$this->breadcrumbs = $this->get_page_breadcrumbs(); // get the breadcrumbs
 		}
@@ -179,9 +182,9 @@ class Template {
 	 * @return boolean depending on existence
 	 */
 	public function template_exists($template = "") {
-		if (empty($template)) {
-			$template = $this->template;
-		}
+		// if (empty($template)) {
+		// 	$template = $this->template;
+		// }
 		
 		return file_exists($GLOBALS['tempPath'] . $template . '.php');
 	}
@@ -222,7 +225,7 @@ class Template {
 			<?php foreach ($structure as $uri => $values): ?>
 				<?php if ((!isset($values['hidden']) || !$values['hidden']) || !$honorhidden):
 					// check if you only want to show valid links
-					if (!$showonlyvalid || $this->template_exists($values['template'])): ?>
+					if (!$showonlyvalid || (isset($values['template']) && $this->template_exists($values['template']))): ?>
 						<?php
 							//check if has children
 							$children = (($alllevels && (isset($values['children']) && !empty($values['children']))) ? true : false);
@@ -233,7 +236,7 @@ class Template {
 							</div>
 							<?php
 								if ($children) {
-									echo $this->build_nav($values['children'], $parent . '/' . $uri);
+									echo $this->build_nav($values['children'], $parent . '/' . $uri, $alllevels, $honorhidden, $showonlyvalid);
 								}
 							?>
 						</li>
@@ -441,10 +444,24 @@ class Template {
 		// require twig
 		require_once APPDIR . 'Twig/Autoloader.php';
 		Twig_Autoloader::register();
-
+		
 		// store the location of the templates
 		$loader = new Twig_Loader_Filesystem($GLOBALS['tempPath']);
 		$twig = new Twig_Environment($loader); // create the environment
+		
+		// general function for getting attributes for template object
+		$tp_attr_function = new Twig_SimpleFunction('tp_attr', function($attrname) {
+			return $this->$attrname;
+		});
+		$twig->addFunction($tp_attr_function);
+		
+		// sitemap function for use in templates
+		$sitemap_function = new Twig_SimpleFunction('sitemap', function($showonlyvalid) {
+		    echo $this->sitemap($showonlyvalid);
+		});
+		$twig->addFunction($sitemap_function);
+		
+		
 		$twig->display($this->template . '.php', $this->content); // display the template passing in the content
 	}
 }
