@@ -5,6 +5,7 @@
  *   "uri-value" => array(
  *			"title" => "value to appear in nav and title meta etc",
  *			"template" => "which template to use (same as name of file in templates folder without the .php extension, if in sub folder, do subfolder/filename.",
+ *			"content" =>which content file to use (optional)"
  *			"hidden" => true or false determines if hidden from general navigation across the site, default false (optional),
  *			"show-top-level" => true or false determines if should be shown in top level nav (optional),
  *			"breadcrumbs" => true or false determines if you want to show or hide breadcrumbs for that page, default is true (optional),
@@ -21,10 +22,10 @@ $structure = array(
 		"show-top-level" => true,
 		"breadcrumbs"	=> false
 	),
-	"about" => array(
-		"title" 	=> "About",
-		"template" 	=> "landing-standard",
-		"content"	=> "about-landing"
+	"example" => array(
+		"title" 	=> "Example Page",
+		"template" 	=> "example-template",
+		"content"	=> "example-content"
 	),
 	"locations" => array(
 		"title"		=> "Locations",

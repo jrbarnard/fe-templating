@@ -3,7 +3,7 @@
 /**
  * Class to build up your pages and structure based off a single structure file for your page structure
  *
- *
+ * - DO NOT EDIT
  */
 class Template {
 	
