@@ -32,7 +32,9 @@ define('RRIMG', RRASSETS . 'images/');
 
 	// Initiate twig
 	$tp->twig_init();
-
+	
+	include 'parts/sidenav.php';
+	
 	include "parts/footer.php"; // include footer
 	include "parts/scripts.php"; // include javascript ?>
 </body>

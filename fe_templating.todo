@@ -25,6 +25,8 @@ Front end templating todo:
       ☐ 2 types different content
     ☐ Content pages
       ☐ few different types with different mark up and how that works.
+  ☐ Sidenav
+    ☐ Methods to handle different sidenav stuff -> creating twig functions for them
 
 Priorities:
   ☐ refine usage of twig/content files

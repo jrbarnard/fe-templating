@@ -29,8 +29,8 @@ $structure = array(
 	),
 	"locations" => array(
 		"title"		=> "Locations",
-		"template" 	=> "landing-standard",
-		"content"	=> "locations-landing",
+		"template" 	=> "",
+		"content"	=> "",
 		"children" 	=> array(
 			"location_1" => array(
 				"title" 	=> "Location 1",
@@ -38,7 +38,8 @@ $structure = array(
 				"children" 	=> array(
 					"further_info" => array(
 						"title" 	=> "Location 1 further info",
-						"template" 	=> ""
+						"template" 	=> "example-template",
+						"content"	=> "example-content"
 					),
 					"contact_info" => array(
 						"title" 	=> "Location 1 contact info",
