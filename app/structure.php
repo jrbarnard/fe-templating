@@ -27,6 +27,7 @@ class Structure
         $this->uri_structure = self::uriStructure($this->uri);
         $this->levels = count($this->uri_structure);
 
+        // get the full request pages checking against the routes structure
         try {
             // search for and store current page
             $this->pages = $this->getRequestPages();
@@ -34,6 +35,13 @@ class Structure
             // trigger 404
             dump('404');
         }
+
+        // get current page
+        $this->current_page = $this->pages[$this->levels - 1];
+
+        // build up template
+
+        dump(Template::build($this->current_page));
     }
 
     public static function init()

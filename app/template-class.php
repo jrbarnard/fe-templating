@@ -7,7 +7,7 @@ namespace App;
  *
  * - DO NOT EDIT
  */
-class Template {
+class Template_old {
 	
 	public $structure = array(); // storage for structure tree
 	public $uri; // storage for current uri in it's base form e.g test/test2/test3/

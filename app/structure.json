@@ -3,6 +3,7 @@
     "/": {
       "title": "Home",
       "template": "home",
+      "content": "home",
       "hidden": true,
       "show-top-level": true,
       "breadcrumbs": false
