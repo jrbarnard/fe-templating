@@ -3,6 +3,7 @@
 namespace App;
 
 use Whoops\Exception\ErrorException;
+use App\Exceptions\NotFoundException;
 
 class Structure
 {
@@ -12,6 +13,8 @@ class Structure
     public $uri = ''; // stores uri string e.g foo/bar
     public $uri_structure = array(); // stores uri in array e.g array('foo', 'bar')
     public $levels = 1; // stores number of uri levels in current request
+
+    public $pages = array();
 
 
     protected function __construct()
@@ -24,8 +27,13 @@ class Structure
         $this->uri_structure = self::uriStructure($this->uri);
         $this->levels = count($this->uri_structure);
 
-        // search for and store current page
-        $this->current_page = self::findRoute($this, $this->uri_structure[$this->levels - 1]);
+        try {
+            // search for and store current page
+            $this->pages = $this->getRequestPages();
+        } catch (NotFoundException $e) {
+            // trigger 404
+            dump('404');
+        }
     }
 
     public static function init()
@@ -94,7 +102,7 @@ class Structure
     public static function uriStructure($uri)
     {
         if (empty($uri)) {
-            return array();
+            return array('/');
         }
 
         $parts = explode('/', $uri);
@@ -108,48 +116,82 @@ class Structure
 
         $parts = array_values($parts);
 
+        if (empty($parts)) {
+            $parts = array('/');
+        }
+
         return $parts;
     }
 
-    public static function findRoute(Structure $structure, $route = false)
+    /**
+     * Method that gets all the request pages
+     * @param bool $route
+     * @return Page|bool
+     * @throws NotFoundException
+     */
+    public function getRequestPages($route = false)
     {
         if (false === $route) {
-            throw new ErrorException('You must pass a valid route to look up')
-        }
-
-        // check for single case and return value
-        if ($structure->levels == 1) {
-            return new Page(array(
-                'uri' => $structure->uri_structure[0],
-                'page' => $structure->getPage($structure->uri_structure[0]),
-                'level' => 0
-            ));
+            $route = $this->getTrailingRoute();
         }
 
         // store a pointer so we can walk to array
-        $pointer = $structure->routes;
+        $pointer = $this->routes;
+
+        $pages = array();
+
         // iterate over pages
-        for ($i = 0; $i < $structure->levels; $i++) {
+        for ($i = 0; $i < $this->levels; $i++) {
             if ($i > 0) {
-                $pointer = $pointer['children'];
+                $pointer = isset($pointer->children) ? $pointer->children : array();
             }
-            $pointerpage = $structure->getPage($structure->uri_structure[$i], $pointer);
+
+            $pointer_page = $this->getRoute($this->uri_structure[$i], $pointer);
             // if there is a page on this level as part of the uri structure
-            if ($pointerpage !== false) {
+            if (false !== $pointer_page) {
+
+                $pages[] = new Page(array(
+                    'uri' => $this->uri_structure[$i],
+                    'page' => $pointer_page,
+                    'level' => $i
+                ));
+
                 // there is a page so check if it is the one we're looking for
-                if ($structure->uri_structure[$i] == $page) {
-                    // it is, store the page and level in an object and return
-                    return new Page(array(
-                        'uri' => $structure->uri_structure[$i],
-                        'page' => $pointerpage,
-                        'level' => $i
-                    ));
+                if ($this->uri_structure[$i] === $route) {
+                    return $pages;
                 }
                 // else set the pointer and iterate
-                $pointer = $pointerpage;
+                $pointer = $pointer_page;
             } else {
-                return false;
+                throw new NotFoundException('Route not found', 404);
             }
         }
+    }
+
+    /**
+     * Gets a route from a passed in routes array
+     * Basically just gets by object arrow notation
+     *
+     * @param $route - route slug
+     * @param $routes - array to check in
+     *
+     * @return route object or false if fails
+     */
+    private static function getRoute($route, $routes = array())
+    {
+        if (isset($routes->{$route})) {
+            return $routes->{$route};
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Simply gets the trailign route of the uri structure (i.e current route)
+     * @return mixed
+     */
+    private function getTrailingRoute()
+    {
+        return $this->uri_structure[$this->levels - 1];
     }
 }
