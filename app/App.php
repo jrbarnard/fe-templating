@@ -2,10 +2,12 @@
 
 namespace App;
 
+use Whoops;
+
 /**
  * Class App
  * Singleton
- * 
+ *
  * @package App
  */
 class App
@@ -35,7 +37,7 @@ class App
      */
     protected function __construct()
     {
-
+        self::registerExceptionHandler();
     }
 
     /**
@@ -56,5 +58,15 @@ class App
      */
     private function __wakeup()
     {
+    }
+
+    /**
+     * Method for registering an exception handler
+     */
+    private static function registerExceptionHandler()
+    {
+        $whoops = new Whoops\Run;
+        $whoops->pushHandler(new Whoops\Handler\PrettyPageHandler);
+        $whoops->register();
     }
 }
