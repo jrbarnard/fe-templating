@@ -1,7 +1,7 @@
 <?php
 /**
  * This is an example of a content array for use with an associated twig template
- * In order to use, this file name (without .php) must be specified within the structure file in the app directory i.e "content" => "example-content".
+ * In order to use, this file name (without .php) must be specified within the structure file in the App directory i.e "content" => "example-content".
  * You can specify any number of vars and values here within the returned array.
  */
 return array(
