@@ -38,7 +38,6 @@ class App
     protected function __construct()
     {
         self::registerExceptionHandler();
-        Page::getInstance();
     }
 
     /**
@@ -74,6 +73,8 @@ class App
     public static function load()
     {
         $structure = Structure::init();
+
+        dump($structure);
 
 //        Page::getInstance();
     }
