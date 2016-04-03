@@ -78,4 +78,9 @@ class App
 
 //        Page::getInstance();
     }
+
+    public static function getBasePath()
+    {
+        return dirname(__DIR__) . DIRECTORY_SEPARATOR;
+    }
 }
