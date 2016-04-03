@@ -1,0 +1,5 @@
+#ignore ide settings
+/.idea/
+
+#composer
+/vendor/

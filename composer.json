@@ -1,0 +1,17 @@
+{
+    "name": "jamesbarnard/fe-templating",
+    "description": "Front end templating for rapidly developing prototypes",
+    "require": {
+        "twig/twig": "^1.24",
+        "twbs/bootstrap": "^3.3"
+    },
+    "require-dev": {
+        "filp/whoops": "^2.1"
+    },
+    "authors": [
+        {
+            "name": "James Barnard",
+            "email": "james.r.barnard@gmail.com"
+        }
+    ]
+}
