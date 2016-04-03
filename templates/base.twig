@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--[if lt IE 9]>    <html class="no-js ie lt-ie9 lt-ie10 {{ app.environment }}" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie ie9 lt-ie10 {{ app.environment }}" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="goodie no-js {{ app.environment }}" lang="en"> <!--<![endif]-->
+<head>
+
+    <title>{{ page.title }}</title>
+    <meta name="description" content="{{ page.description }}" />
+
+    {% block styles %}
+        <link rel="stylesheet" href="{% getAssetPath('style.css') %}" />
+    {% endblock %}
+
+</head>
+<body>
+{% block header %}
+    <header>
+        <h1>Navigation - all</h1>
+        <nav>
+            {# Here is an example of getting the entire tree structure nav markup #}
+
+        </nav>
+
+        <h2>Navigation - just top level</h2>
+        <nav>
+            {# Here is an example of getting just the top level nav items and not recursively going down the tree #}
+
+        </nav>
+    </header>
+{% endblock %}
+
+{% getPart('breadcrumbs') %}
+
+
+
+{% block content %}
+    Content
+{% endblock %}
+
+
+
+{% getPart('sidenav') %}
+
+
+
+{% block footer %}
+    <footer>
+        FOOTER
+    </footer>
+{% endblock %}
+
+{% block scripts %}
+    {# base scripts go here #}
+{% endblock %}
+</body>
+</html>

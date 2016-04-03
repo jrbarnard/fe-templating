@@ -28,12 +28,12 @@ define('RRIMG', RRASSETS . 'images/');
 	<?php
 
 	include "parts/header.php"; // include header
-	include 'parts/breadcrumbs.php'; // include breadcrumbs
+	include 'parts/breadcrumbs.twig'; // include breadcrumbs
 
 	// Initiate twig
 	$tp->twig_init();
 	
-	include 'parts/sidenav.php';
+	include 'parts/sidenav.twig';
 	
 	include "parts/footer.php"; // include footer
 	include "parts/scripts.php"; // include javascript ?>
