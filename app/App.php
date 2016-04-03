@@ -38,6 +38,7 @@ class App
     protected function __construct()
     {
         self::registerExceptionHandler();
+        Page::getInstance();
     }
 
     /**
@@ -68,5 +69,12 @@ class App
         $whoops = new Whoops\Run;
         $whoops->pushHandler(new Whoops\Handler\PrettyPageHandler);
         $whoops->register();
+    }
+
+    public static function load()
+    {
+        $structure = Structure::init();
+
+//        Page::getInstance();
     }
 }

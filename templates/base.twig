@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<!--[if lt IE 9]>    <html class="no-js ie lt-ie9 lt-ie10 {{ app.environment }}" lang="en"> <![endif]-->
-<!--[if IE 9]>    <html class="no-js ie ie9 lt-ie10 {{ app.environment }}" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--> <html class="goodie no-js {{ app.environment }}" lang="en"> <!--<![endif]-->
+<!--[if lt IE 9]><html class="no-js ie lt-ie9 lt-ie10 {{ app.environment }}" lang="en"><![endif]-->
+<!--[if IE 9]><html class="no-js ie ie9 lt-ie10 {{ app.environment }}" lang="en"><![endif]-->
+<!--[if gt IE 9]><!--><html class="goodie no-js {{ app.environment }}" lang="en"><!--<![endif]-->
 <head>
 
     <title>{{ page.title }}</title>
     <meta name="description" content="{{ page.description }}" />
 
     {% block styles %}
-        <link rel="stylesheet" href="{% getAssetPath('style.css') %}" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     {% endblock %}
 
 </head>

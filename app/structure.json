@@ -1,42 +1,36 @@
 {
-  "routes": [
-    {
-      "route": "/",
+  "routes": {
+    "/": {
       "title": "Home",
       "template": "home",
       "hidden": true,
       "show-top-level": true,
       "breadcrumbs": false
     },
-    {
-      "route": "example",
+    "example": {
       "title": "Example Page",
       "template": "example-template",
       "content": "example-content"
     },
-    {
-      "route": "locations",
+    "locations": {
       "title": "Locations",
       "template": "",
       "content": "",
-      "children": [
-        {
-          "route": "location_1",
+      "children": {
+        "location_1": {
           "title": "Location 1",
-          "children": [
-            {
-              "route": "further_info",
+          "children": {
+            "further_info": {
               "title": "Location 1 further info",
               "template": "example-template",
               "content": "example-content"
             },
-            {
-              "route": "contact_info",
-              "title": "Location 1 contact info",
+            "contact_info": {
+              "title": "Location 1 contact info"
             }
-          ]
+          }
         }
-      ]
+      }
     }
-  ]
+  }
 }

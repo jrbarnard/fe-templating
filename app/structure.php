@@ -1,78 +1,155 @@
 <?php
-/**
- * Usage of front end templating structure:
- * - To add a page add in an array element as such:
- *   "uri-value" => array(
- *			"title" => "value to appear in nav and title meta etc",
- *			"template" => "which template to use (same as name of file in templates folder without the .php extension, if in sub folder, do subfolder/filename.",
- *			"content" =>which content file to use (optional)"
- *			"hidden" => true or false determines if hidden from general navigation across the site, default false (optional),
- *			"show-top-level" => true or false determines if should be shown in top level nav (optional),
- *			"breadcrumbs" => true or false determines if you want to show or hide breadcrumbs for that page, default is true (optional),
- *			"children" => an array of pages like this example, which will be iterated over for navigation etc (same options as above)
- *		)
- *
- */
 
-$structure = array(
-	"/" => array(
-		"title" 		=> "Home",
-		"template" 		=> "home",
-		"hidden"		=> true,
-		"show-top-level" => true,
-		"breadcrumbs"	=> false
-	),
-	"example" => array(
-		"title" 	=> "Example Page",
-		"template" 	=> "example-template",
-		"content"	=> "example-content"
-	),
-	"locations" => array(
-		"title"		=> "Locations",
-		"template" 	=> "",
-		"content"	=> "",
-		"children" 	=> array(
-			"location_1" => array(
-				"title" 	=> "Location 1",
-				"template" 	=> "",
-				"children" 	=> array(
-					"further_info" => array(
-						"title" 	=> "Location 1 further info",
-						"template" 	=> "example-template",
-						"content"	=> "example-content"
-					),
-					"contact_info" => array(
-						"title" 	=> "Location 1 contact info",
-						"template" 	=> ""
-					)
-				)
-			),
-			"location_2" => array(
-				"title"		=> "Location 2",
-				"template"	=> ""
-			)
-		)
-	),
-	"staff" => array(
-		"title"		=> "Staff",
-		"template"	=> ""
-	),
-	"volunteers" => array(
-		"title"		=> "Volunteers",
-		"template"	=> ""
-	),
-	'contact_us' => array(
-		"title"		=> "Contact us",
-		"template"	=> "",
-		"hidden" => true,
-		"breadcrumbs"	=> false,
-		"show-top-level" => true
-	),
-	'sitemap' => array(
-		"title"		=> "Sitemap",
-		"template"	=> "sitemap",
-		// "hidden" => true
-	)
-)
+namespace App;
 
-?>
+use Whoops\Exception\ErrorException;
+
+class Structure
+{
+    public static $json_filename = 'structure.json';
+    public $json = ''; // stores the json structure as it comes (valid or not)
+    public $routes = array(); // stores the routes object within structure
+    public $uri = ''; // stores uri string e.g foo/bar
+    public $uri_structure = array(); // stores uri in array e.g array('foo', 'bar')
+    public $levels = 1; // stores number of uri levels in current request
+
+
+    protected function __construct()
+    {
+        $this->json = $this->getStructure();
+        $this->routes = $this->convertJsonToAssocArr($this->json);
+
+        // get and store uri info
+        $this->uri = self::currentUri();
+        $this->uri_structure = self::uriStructure($this->uri);
+        $this->levels = count($this->uri_structure);
+
+        // search for and store current page
+        $this->current_page = self::findRoute($this, $this->uri_structure[$this->levels - 1]);
+    }
+
+    public static function init()
+    {
+        return new Structure();
+    }
+
+    /**
+     * Gets the structure file contents
+     * @return mixed
+     * @throws ErrorException
+     */
+    private function getStructure()
+    {
+        if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . self::$json_filename)) {
+            $json = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . self::$json_filename);
+
+            if (false !== $json) {
+                return $json;
+            }
+        }
+
+        throw new ErrorException('Structure file: ' . self::$json_filename . ' not found in: ' . __DIR__);
+    }
+
+    /**
+     * Converts Json to associative array of routes
+     * @param $json
+     * @return mixed
+     * @throws ErrorException
+     */
+    private function convertJsonToAssocArr($json)
+    {
+        $arr = json_decode($json);
+
+        if (null === $arr) {
+            throw new ErrorException('Json in ' . self::$json_filename . ' is invalid and couldn\'t decode');
+        }
+
+        if (false === isset($arr->routes)) {
+            throw new ErrorException('Json in ' . self::$json_filename . ' didn\'t have a valid routes object');
+        }
+
+        return $arr->routes;
+    }
+
+    /**
+     * Method that gets uri string from get 'p' param
+     * @return string
+     */
+    public static function currentUri()
+    {
+        if (empty($_GET['p'])) {
+            $_GET['p'] = '/';
+        }
+
+        return $_GET['p'];
+    }
+
+    /**
+     * Method that takes a string uri and converts to an array
+     * e.g test/a/link => array('test', 'a', 'link');
+     * @param $uri
+     * @return array
+     */
+    public static function uriStructure($uri)
+    {
+        if (empty($uri)) {
+            return array();
+        }
+
+        $parts = explode('/', $uri);
+
+        // check for empty values, unset and then reindex
+        foreach ($parts as $key => $value) {
+            if ("" === $value) {
+                unset($parts[$key]);
+            }
+        }
+
+        $parts = array_values($parts);
+
+        return $parts;
+    }
+
+    public static function findRoute(Structure $structure, $route = false)
+    {
+        if (false === $route) {
+            throw new ErrorException('You must pass a valid route to look up')
+        }
+
+        // check for single case and return value
+        if ($structure->levels == 1) {
+            return new Page(array(
+                'uri' => $structure->uri_structure[0],
+                'page' => $structure->getPage($structure->uri_structure[0]),
+                'level' => 0
+            ));
+        }
+
+        // store a pointer so we can walk to array
+        $pointer = $structure->routes;
+        // iterate over pages
+        for ($i = 0; $i < $structure->levels; $i++) {
+            if ($i > 0) {
+                $pointer = $pointer['children'];
+            }
+            $pointerpage = $structure->getPage($structure->uri_structure[$i], $pointer);
+            // if there is a page on this level as part of the uri structure
+            if ($pointerpage !== false) {
+                // there is a page so check if it is the one we're looking for
+                if ($structure->uri_structure[$i] == $page) {
+                    // it is, store the page and level in an object and return
+                    return new Page(array(
+                        'uri' => $structure->uri_structure[$i],
+                        'page' => $pointerpage,
+                        'level' => $i
+                    ));
+                }
+                // else set the pointer and iterate
+                $pointer = $pointerpage;
+            } else {
+                return false;
+            }
+        }
+    }
+}
