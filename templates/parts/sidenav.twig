@@ -1,4 +1,5 @@
 <aside>
+	{#
 	<?php //TODO: Work on integrating methods for sidenav stuff into base class ?>
 	
 	<?php // Example of getting the sidenav of the overall top level parent ?>
@@ -13,5 +14,6 @@
 			<?php $tp->build_nav($tp->parent->page['children'], $tp->build_uri($tp->get_parent_uri())); ?>
 		</nav>
 	<?php endif; ?>
+	#}
 </aside>
 

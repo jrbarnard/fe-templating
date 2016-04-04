@@ -3,8 +3,7 @@
 namespace App;
 
 use App\Page;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use App\Twig;
 
 class Template
 {
@@ -23,7 +22,9 @@ class Template
         }
 
         if (self::templateFileExists($this->template_name)) {
-            $this->twigInit();
+            $twig = Twig::init();
+            $twig->loadTemplate($this->template_name);
+            $twig->render($this->content);
         }
     }
 
@@ -89,7 +90,7 @@ class Template
      * Static function for getting content path
      * @return mixed
      */
-    private static function getContentPath()
+    public static function getContentPath()
     {
         return dirname(__DIR__) . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR;
     }
@@ -98,7 +99,7 @@ class Template
      * Static function for getting template path
      * @return mixed
      */
-    private static function getTemplatePath()
+    public static function getTemplatePath()
     {
         return dirname(__DIR__) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
     }
@@ -133,19 +134,5 @@ class Template
         } else {
             return false;
         }
-    }
-
-    /**
-     * Method that inits twig template
-     */
-    private function twigInit()
-    {
-        // store the location of the templates
-        $loader = new Twig_Loader_Filesystem(self::getTemplateFilePath());
-        $twig = new Twig_Environment($loader); // create the environment
-
-        $template = $twig->loadTemplate($this->template_name . '.twig');
-
-        echo $template->render($this->content);
     }
 }

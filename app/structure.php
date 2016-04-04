@@ -4,6 +4,7 @@ namespace App;
 
 use Whoops\Exception\ErrorException;
 use App\Exceptions\NotFoundException;
+use App\Twig;
 
 class Structure
 {
@@ -33,7 +34,11 @@ class Structure
             $this->pages = $this->getRequestPages();
         } catch (NotFoundException $e) {
             // trigger 404
-            dump('404');
+            http_response_code(404);
+            $twig = Twig::init();
+            $twig->loadTemplate('404');
+            $twig->render();
+            return;
         }
 
         // get current page
