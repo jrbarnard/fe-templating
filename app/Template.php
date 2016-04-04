@@ -15,18 +15,18 @@ class Template
     {
         $this->page = $page;
 
-        $this->content = self::getContent($this->page);
+        $this->content = self::getContent($page);
 
-        if (isset($this->page->page->template)) {
-            $this->template_name = $this->page->page->template;
+        if (isset($page->page['template'])) {
+            $this->template_name = $page->page['template'];
         }
 
         if (self::templateFileExists($this->template_name)) {
             $twig = Twig::init();
 
             $twig->loadTwigFunctions(array(
-                "getPageTitle" => array($this->page, 'getTitle'),
-                "getPageDescription" => array($this->page, 'getDescription')
+                "getPageTitle" => array($page, 'getTitle'),
+                "getPageDescription" => array($page, 'getDescription')
             ));
 
             $twig->loadTemplate($this->template_name);
@@ -45,7 +45,7 @@ class Template
      * @return array of variables
      */
     private static function getContent(Page $page) {
-        $content_file_name = isset($page->page) && isset($page->page->content) ? $page->page->content : false;
+        $content_file_name = isset($page->page) && isset($page->page['content']) ? $page->page['content'] : false;
 
         if (true === self::doesContentFileExist($content_file_name)) {
             $json = file_get_contents(self::getContentFilePath($content_file_name));

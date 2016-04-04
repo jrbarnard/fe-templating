@@ -152,7 +152,7 @@ class Structure
         // iterate over pages
         for ($i = 0; $i < $this->levels; $i++) {
             if ($i > 0) {
-                $pointer = isset($pointer->children) ? $pointer->children : array();
+                $pointer = isset($pointer['children']) ? $pointer['children'] : array();
             }
 
             $pointer_page = $this->getRoute($this->uri_structure[$i], $pointer);
@@ -184,12 +184,12 @@ class Structure
      * @param $route - route slug
      * @param $routes - array to check in
      *
-     * @return route object or false if fails
+     * @return route item or false if fails
      */
     private static function getRoute($route, $routes = array())
     {
-        if (isset($routes->{$route})) {
-            return $routes->{$route};
+        if (isset($routes[$route])) {
+            return $routes[$route];
         } else {
             return false;
         }

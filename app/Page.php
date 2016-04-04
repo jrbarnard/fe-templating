@@ -45,8 +45,8 @@ class Page
             return "";
         }
 
-        if (false !== property_exists($this->page, $prop)) {
-            return $this->page->{$prop};
+        if (false !== isset($this->page[$prop])) {
+            return $this->page[$prop];
         } else {
             return "";
         }
