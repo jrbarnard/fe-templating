@@ -14,6 +14,7 @@ class Structure
     public $uri = ''; // stores uri string e.g foo/bar
     public $uri_structure = array(); // stores uri in array e.g array('foo', 'bar')
     public $levels = 1; // stores number of uri levels in current request
+    public $is404 = false; // records if we've hit a 404 or not
 
     public $pages = array();
 
@@ -35,14 +36,15 @@ class Structure
         } catch (NotFoundException $e) {
             // trigger 404
             http_response_code(404);
-            $twig = Twig::init();
-            $twig->loadTemplate('404');
-            $twig->render();
-            return;
+            $this->is404 = true;
         }
 
-        // get current page
-        $this->current_page = $this->pages[$this->levels - 1];
+        // get current page, or set up 404
+        if (false === $this->is404) {
+            $this->current_page = $this->pages[$this->levels - 1];
+        } else {
+            $this->current_page = Page::page404();
+        }
     }
 
     public static function init()

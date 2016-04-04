@@ -8,8 +8,8 @@ class Page
 {
 
     public $uri = '';
-    public $page;
-    public $level;
+    public $page = array();
+    public $level = 0;
 
     public function __construct($props = array())
     {
@@ -67,5 +67,20 @@ class Page
     public function getDescription()
     {
         return $this->getPageProp('description');
+    }
+
+    /**
+     * Static method for generating the 404 page
+     * @return Page
+     */
+    public static function page404()
+    {
+        return new Page(array(
+            'page' => array(
+                'title' => '404 - Page not found',
+                'description' => 'Your page wasn\'t found',
+                'template' => '404'
+            )
+        ));
     }
 }
