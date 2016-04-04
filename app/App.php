@@ -77,8 +77,6 @@ class App
         $structure = Structure::init();
 
         dump($structure);
-
-//        Page::getInstance();
     }
 
     public static function getBasePath()

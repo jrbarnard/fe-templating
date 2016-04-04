@@ -67,7 +67,7 @@ class Twig
 
         echo $this->template->render($content);
     }
-
+    
     /**
      * Method that takes an array of helpers (functions)
      * stored as key => method name, if method of class stored as array(className, methodName)
@@ -76,9 +76,8 @@ class Twig
     public function loadTwigFunctions($helpers = array())
     {
         foreach($helpers as $name => $method) {
-            $this->twig_environment->addFunction(
-                new Twig_SimpleFunction($name, $method)
-            );
+            $function = new Twig_SimpleFunction($name, $method);
+            $this->twig_environment->addFunction($function);
         }
     }
 }
