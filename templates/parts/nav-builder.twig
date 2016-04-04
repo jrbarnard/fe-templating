@@ -23,7 +23,7 @@ NB: This is for the example set up, however a blank duplicate is below which doe
 
                     {# Create new route #}
                     {% set currentpath = path ~ '/' ~ route %}
-                    <a href="{{ currentpath }}" class="{% if dropdown %}dropdown-toggle{% endif %}" {% if dropdown %}data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"{% endif %}>
+                    <a href="{{ currentpath }}" class="{% if dropdown %}dropdown-toggle{% endif %}" {% if dropdown %}data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"{% endif %}>
                         {{ data.title }}
 
                         {# Output caret symbol if has children (is dropdown) #}
@@ -47,19 +47,35 @@ NB: This is for the example set up, however a blank duplicate is below which doe
 
 
 {# nav builder macro to build up a nav structure with no special styling - NOT COMPLETE #}
-{% macro standard(routes, level, path, show_hidden, levels) %}
+{% macro standard(routes, levels, show_hidden, level, path) %}
+
+    {% if level == null %}
+        {% set level = 1 %}
+    {% endif %}
 
     <ul>
         {% for route, data in routes %}
-            {% if show_hidden is not defined or (false == show_hidden and false == data.hidden) %}
-                <li>
-                    {% set currentpath = path ~ '/' ~ route ~ '/'  %}
-                    <a href="{{ currentpath }}">{{ data.title }}</a>
-                    {% if data.children %}
+            {# Ensure not to load or show a hidden route #}
+            {% if show_hidden is not defined or show_hidden is same as(true) or (false == show_hidden and false == data.hidden) %}
+
+
+                {% if levels is not defined or levels is same as(true) or (data.children and levels > level) %}
+                    {% set dropdown = true %}
+                {% endif %}
+
+                {# Create list item #}
+                <li class="{% if route == currenturi %}active{% endif %}">
+
+                    {# Create new route #}
+                    {% set currentpath = path ~ '/' ~ route %}
+                    <a href="{{ currentpath }}" class="">
+                        {{ data.title }}
+                    </a>
+
+                    {# If route has children then recursively call macro #}
+                    {% if dropdown and data.children %}
                         {% set level = level + 1 %}
-                        {% if levels != level %}
-                            {{ _self.standard(data.children, level, currentpath, show_hidden, levels) }}
-                        {% endif %}
+                        {{ _self.standard(data.children, levels, show_hidden, level, currentpath) }}
                         {% set level = level - 1 %}
                     {% endif %}
                 </li>

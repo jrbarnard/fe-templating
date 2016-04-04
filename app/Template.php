@@ -33,7 +33,6 @@ class Template
             $twig->addGlobal('page', $page->page);
             $twig->addGlobal('currenturi', $page->uri);
             $twig->addGlobal('routes', $routes);
-            dump($routes);
 
             $twig->loadTemplate($this->template_name);
             $twig->render($this->content);

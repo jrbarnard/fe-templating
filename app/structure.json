@@ -5,7 +5,6 @@
       "template": "home",
       "content": "home",
       "hidden": true,
-      "show-top-level": true,
       "breadcrumbs": false
     },
     "example-standard": {
@@ -40,6 +39,11 @@
           }
         }
       }
+    },
+    "sitemap": {
+      "title": "sitemap",
+      "template": "sitemap",
+      "hidden": true
     }
   }
 }
