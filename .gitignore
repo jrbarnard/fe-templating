@@ -3,3 +3,6 @@
 
 #composer
 /vendor/
+
+#environment vars
+.env
