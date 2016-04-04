@@ -2,19 +2,37 @@
 nav builder macro to build up a nav structure with special dropdown styling for the top nav
 NB: This is for the example set up, however a blank duplicate is below which doesn't apply special bootstrap classes and so can be duplicated and changed to how you need
 #}
-{% macro dropdown(routes, level, show_hidden, show_only_valid, levels) %}
+{% macro dropdown(routes, levels, show_hidden, level, path) %}
 
-    <ul class="{% if level == 0 %}nav navbar-nav{% endif %}">
+    {% if level == null %}
+        {% set level = 1 %}
+    {% endif %}
+
+    {# If we are on first level apply standard top level class #}
+    <ul class="{% if level == 1 %}nav navbar-nav{% else %}dropdown-menu{% endif %}">
         {% for route, data in routes %}
+            {# Ensure not to load or show a hidden route #}
             {% if show_hidden is not defined or (false == show_hidden and false == data.hidden) %}
-                <li>
-                    {% set currentpath = path ~ '/' ~ route ~ '/'  %}
-                    <a href="{{ currentpath }}">{{ data.title }}</a>
-                    {% if data.children %}
-                        {% set level = level + 1 %}
-                        {% if levels != level %}
-                            {{ _self.nav_builder_standard(data.children, level, currentpath, show_hidden, levels) }}
+
+                {% if levels is not defined or (data.children and levels > level) %}
+                    {% set dropdown = true %}
+                {% endif %}
+
+                <li class="{% if dropdown %}dropdown{% endif %}">
+                    {% set currentpath = path ~ '/' ~ route %}
+                    <a href="{{ currentpath }}" {% if dropdown %}class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"{% endif %}>
+                        {{ data.title }}
+
+                        {# Output caret symbol if has children (is dropdown) #}
+                        {% if dropdown %}
+                            <span class="caret"></span>
                         {% endif %}
+                    </a>
+
+                    {# If route has children then recursively call macro #}
+                    {% if dropdown %}
+                        {% set level = level + 1 %}
+                        {{ _self.dropdown(data.children, levels, show_hidden, level, currentpath) }}
                         {% set level = level - 1 %}
                     {% endif %}
                 </li>
@@ -37,7 +55,7 @@ NB: This is for the example set up, however a blank duplicate is below which doe
                     {% if data.children %}
                         {% set level = level + 1 %}
                         {% if levels != level %}
-                            {{ _self.nav_builder_standard(data.children, level, currentpath, show_hidden, levels) }}
+                            {{ _self.standard(data.children, level, currentpath, show_hidden, levels) }}
                         {% endif %}
                         {% set level = level - 1 %}
                     {% endif %}
