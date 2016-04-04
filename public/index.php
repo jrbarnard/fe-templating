@@ -8,5 +8,7 @@ set_include_path(dirname(__DIR__));
 require 'vendor/autoload.php';
 require 'App/autoload.php';
 
-$app = \App\App::getInstance();
+use \App\App;
+
+$app = App::getInstance();
 $app->load();
