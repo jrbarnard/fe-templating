@@ -24,8 +24,6 @@ class Template
         if (self::templateFileExists($this->template_name)) {
             $twig = Twig::init();
 
-            dump($this->page->getTitle());
-
             $twig->loadTwigFunctions(array(
                 "getPageTitle" => array($this->page, 'getTitle'),
                 "getPageDescription" => array($this->page, 'getDescription')

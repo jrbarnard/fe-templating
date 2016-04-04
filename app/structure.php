@@ -43,9 +43,6 @@ class Structure
 
         // get current page
         $this->current_page = $this->pages[$this->levels - 1];
-
-        // build up template
-        Template::build($this->current_page);
     }
 
     public static function init()

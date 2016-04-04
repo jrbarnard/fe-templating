@@ -4,15 +4,23 @@
 <!--[if gt IE 9]><!--><html class="goodie no-js {{ app.environment }}" lang="en"><!--<![endif]-->
 <head>
 
-    <title>{% getPageTitle() %}</title>
-    <meta name="description" content="{% getPageDescription() %}" />
-    {{ dump() }}
+    {% if getPageTitle() %}
+        <title>{{ getPageTitle() }}</title>
+    {% endif %}
+
+    {% if getPageDescription %}
+        <meta name="description" content="{{ getPageDescription() }}" />
+    {% endif %}
+
     {% block styles %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     {% endblock %}
 
 </head>
 <body>
+
+{{ dump() }}
+
 {% block header %}
     <header>
         <h1>Navigation - all</h1>

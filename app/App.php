@@ -72,11 +72,15 @@ class App
         $whoops->register();
     }
 
+    /**
+     * Loads the application
+     */
     public static function load()
     {
         $structure = Structure::init();
 
-        dump($structure);
+        // build up template
+        Template::build($structure->current_page);
     }
 
     public static function getBasePath()
