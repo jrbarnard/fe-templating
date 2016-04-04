@@ -33,4 +33,39 @@ class Page
             }
         }
     }
+
+    /**
+     * General method for getting a page property
+     * @param bool $prop
+     * @return string
+     */
+    public function getPageProp($prop = false)
+    {
+        if (false === $prop) {
+            return "";
+        }
+
+        if (false !== property_exists($this->page, $prop)) {
+            return $this->page->{$prop};
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Method to get page title
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->getPageProp('title');
+    }
+    /**
+     * Method to get page title
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->getPageProp('description');
+    }
 }

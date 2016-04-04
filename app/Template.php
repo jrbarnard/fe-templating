@@ -23,6 +23,12 @@ class Template
 
         if (self::templateFileExists($this->template_name)) {
             $twig = Twig::init();
+
+            $twig->loadTwigFunctions(array(
+                "getPageTitle" => array($this->page, 'getTitle'),
+                "getPageDescription" => array($this->page, 'getDescription')
+            ));
+
             $twig->loadTemplate($this->template_name);
             $twig->render($this->content);
         }

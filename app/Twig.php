@@ -6,7 +6,6 @@ use \Twig_Loader_Filesystem;
 use \Twig_Environment;
 use \Twig_SimpleFunction;
 use \Twig_Extension_Debug;
-use App\Template;
 use Whoops\Exception\ErrorException;
 
 class Twig
@@ -27,6 +26,10 @@ class Twig
                 new Twig_Extension_Debug()
             );
         }
+
+//        $this->loadTwigFunctions(array(
+//
+//        ));
     }
 
     public static function init()
@@ -65,14 +68,16 @@ class Twig
         echo $this->template->render($content);
     }
 
+    /**
+     * Method that takes an array of helpers (functions)
+     * stored as key => method name, if method of class stored as array(className, methodName)
+     * @param array $helpers
+     */
     public function loadTwigFunctions($helpers = array())
     {
         foreach($helpers as $name => $method) {
-            if (property_exists($this, $method)) {
-
-            }
             $this->twig_environment->addFunction(
-                new Twig_SimpleFunction($name, )
+                new Twig_SimpleFunction($name, $method)
             );
         }
     }

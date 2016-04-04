@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Dotenv\Dotenv;
 use Whoops;
 
 /**
@@ -38,6 +39,7 @@ class App
     protected function __construct()
     {
         self::registerExceptionHandler();
+        self::initDotEnv();
     }
 
     /**
@@ -82,5 +84,14 @@ class App
     public static function getBasePath()
     {
         return dirname(__DIR__) . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * Method to initialise dotenv on base path
+     */
+    private static function initDotEnv()
+    {
+        $dotenv = new Dotenv(self::getBasePath());
+        $dotenv->load();
     }
 }

@@ -4,9 +4,9 @@
 <!--[if gt IE 9]><!--><html class="goodie no-js {{ app.environment }}" lang="en"><!--<![endif]-->
 <head>
 
-    <title>{{ page.title }}</title>
-    <meta name="description" content="{{ page.description }}" />
-
+    <title>{% getPageTitle() %}</title>
+    <meta name="description" content="{% getPageDescription() %}" />
+    {{ dump() }}
     {% block styles %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     {% endblock %}
