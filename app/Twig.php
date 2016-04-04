@@ -6,7 +6,7 @@ use \Twig_Loader_Filesystem;
 use \Twig_Environment;
 use \Twig_SimpleFunction;
 use \Twig_Extension_Debug;
-use Whoops\Exception\ErrorException;
+use \Exception;
 
 class Twig
 {
@@ -40,12 +40,12 @@ class Twig
     /**
      * Method that loads a template by name
      * @param bool $template_name
-     * @throws ErrorException
+     * @throws Exception
      */
     public function loadTemplate($template_name = false)
     {
         if (false === $template_name) {
-            throw new ErrorException('Need to pass a valid template name');
+            throw new Exception('Need to pass a valid template name');
         }
         $this->template = $this->twig_environment->loadTemplate($template_name . '.twig');
     }
@@ -53,21 +53,21 @@ class Twig
     /**
      * Method that renders the set template
      * @param array $content
-     * @throws ErrorException
+     * @throws Exception
      */
     public function render($content = array())
     {
         if (false === is_array($content)) {
-            throw new ErrorException('You must pass a valid (can be empty) array as content to twig render');
+            throw new Exception('You must pass a valid (can be empty) array as content to twig render');
         }
 
         if (false === $this->template) {
-            throw new ErrorException('You are calling render before setting a valid template');
+            throw new Exception('You are calling render before setting a valid template');
         }
 
         echo $this->template->render($content);
     }
-    
+
     /**
      * Method that takes an array of helpers (functions)
      * stored as key => method name, if method of class stored as array(className, methodName)

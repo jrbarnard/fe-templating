@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Whoops\Exception\ErrorException;
+use \Exception;
 
 class Page
 {
@@ -19,12 +19,12 @@ class Page
     /**
      * Method to set properties from passed in array only if they exist
      * @param array $props
-     * @throws ErrorException
+     * @throws Exception
      */
     private function setProperties($props = array())
     {
         if (empty($props)) {
-            throw new ErrorException('You need to pass valid properties to create a page');
+            throw new Exception('You need to pass valid properties to create a page');
         }
 
         foreach($props as $prop => $value) {

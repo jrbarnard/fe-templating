@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Whoops\Exception\ErrorException;
+use \Exception;
 use App\Exceptions\NotFoundException;
 use App\Twig;
 
@@ -53,7 +53,7 @@ class Structure
     /**
      * Gets the structure file contents
      * @return mixed
-     * @throws ErrorException
+     * @throws Exception
      */
     private function getStructure()
     {
@@ -65,28 +65,28 @@ class Structure
             }
         }
 
-        throw new ErrorException('Structure file: ' . self::$json_filename . ' not found in: ' . __DIR__);
+        throw new Exception('Structure file: ' . self::$json_filename . ' not found in: ' . __DIR__);
     }
 
     /**
      * Converts Json to associative array of routes
      * @param $json
      * @return mixed
-     * @throws ErrorException
+     * @throws Exception
      */
     private function convertJsonToAssocArr($json)
     {
-        $arr = json_decode($json);
+        $arr = json_decode($json, true);
 
         if (null === $arr) {
-            throw new ErrorException('Json in ' . self::$json_filename . ' is invalid and couldn\'t decode');
+            throw new Exception('Json in ' . self::$json_filename . ' is invalid and couldn\'t decode');
         }
 
-        if (false === isset($arr->routes)) {
-            throw new ErrorException('Json in ' . self::$json_filename . ' didn\'t have a valid routes object');
+        if (false === isset($arr['routes'])) {
+            throw new Exception('Json in ' . self::$json_filename . ' didn\'t have a valid routes param');
         }
 
-        return $arr->routes;
+        return $arr['routes'];
     }
 
     /**
