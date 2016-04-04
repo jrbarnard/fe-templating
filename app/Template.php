@@ -11,7 +11,7 @@ class Template
     public $content = array();
     public $template_name = '';
 
-    public function __construct(Page $page)
+    public function __construct(Page $page, $routes)
     {
         $this->page = $page;
 
@@ -31,15 +31,17 @@ class Template
 //            ));
 
             $twig->addGlobal('page', $page->page);
+            $twig->addGlobal('routes', $routes);
+            dump($routes);
 
             $twig->loadTemplate($this->template_name);
             $twig->render($this->content);
         }
     }
 
-    public static function build(Page $page)
+    public static function build(Page $page, $routes = array())
     {
-        return new Template($page);
+        return new Template($page, $routes);
     }
 
     /**

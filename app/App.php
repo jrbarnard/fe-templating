@@ -78,9 +78,8 @@ class App
     public function load()
     {
         $structure = Structure::init();
-
         // build up template if not 404
-        Template::build($structure->current_page);
+        Template::build($structure->current_page, $structure->routes);
     }
 
     /**

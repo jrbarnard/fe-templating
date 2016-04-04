@@ -1,0 +1,49 @@
+{#
+nav builder macro to build up a nav structure with special dropdown styling for the top nav
+NB: This is for the example set up, however a blank duplicate is below which doesn't apply special bootstrap classes and so can be duplicated and changed to how you need
+#}
+{% macro dropdown(routes, level, show_hidden, show_only_valid, levels) %}
+
+    <ul class="{% if level == 0 %}nav navbar-nav{% endif %}">
+        {% for route, data in routes %}
+            {% if show_hidden is not defined or (false == show_hidden and false == data.hidden) %}
+                <li>
+                    {% set currentpath = path ~ '/' ~ route ~ '/'  %}
+                    <a href="{{ currentpath }}">{{ data.title }}</a>
+                    {% if data.children %}
+                        {% set level = level + 1 %}
+                        {% if levels != level %}
+                            {{ _self.nav_builder_standard(data.children, level, currentpath, show_hidden, levels) }}
+                        {% endif %}
+                        {% set level = level - 1 %}
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+{% endmacro %}
+
+
+{# nav builder macro to build up a nav structure with no special styling - NOT COMPLETE #}
+{% macro standard(routes, level, path, show_hidden, levels) %}
+
+    <ul>
+        {% for route, data in routes %}
+            {% if show_hidden is not defined or (false == show_hidden and false == data.hidden) %}
+                <li>
+                    {% set currentpath = path ~ '/' ~ route ~ '/'  %}
+                    <a href="{{ currentpath }}">{{ data.title }}</a>
+                    {% if data.children %}
+                        {% set level = level + 1 %}
+                        {% if levels != level %}
+                            {{ _self.nav_builder_standard(data.children, level, currentpath, show_hidden, levels) }}
+                        {% endif %}
+                        {% set level = level - 1 %}
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+{% endmacro %}

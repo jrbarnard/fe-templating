@@ -347,28 +347,6 @@ class Template_old {
 	
 
 	/**
-	 * Method to get uri of parent
-	 * NB: this is a duplication of a different way to get the parent uri as get_parent
-	 * THIS WILL BE DEPRECATED
-	 *
-	 * @return string - parent uri to current page
-	 */
-	public function get_parent_uri() {
-		return $this->parent->uri;
-	}
-	
-
-	/**
-	 * Method to get title of parent
-	 *
-	 * @return string - title of parent page
-	 */
-	public function get_parent_title() {
-		return $this->parent->page['title'];
-	}
-	
-
-	/**
 	 * Method to get breadcrumbs array for page
 	 *
 	 * @return array of breadcrumbs for the current page
@@ -420,51 +398,6 @@ class Template_old {
 		<?php
 		// return recorded output and empty
 		return ob_get_clean();
-	}
-
-	/**
-	 * Method to get the content for a page
-	 *
-	 * @return array of variables
-	 */
-	private function get_content() {
-		$content = isset($this->currentpage->page['content']) ? $this->currentpage->page['content'] : "";
-		$filepath = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR . $content . '.php';
-		if (!empty($content) && file_exists($filepath)) {
-			return (include $filepath);
-		} else {
-			return array();
-		}
-	}
-
-	/**
-	 * Method to initiate twig and include templates/content
-	 *
-	 * @return n/a
-	 */
-	public function twig_init() {
-		// require twig
-		require_once APPDIR . 'Twig/Autoloader.php';
-		Twig_Autoloader::register();
-		
-		// store the location of the templates
-		$loader = new Twig_Loader_Filesystem($GLOBALS['tempPath']);
-		$twig = new Twig_Environment($loader); // create the environment
-		
-		// general function for getting attributes for template object
-		$tp_attr_function = new Twig_SimpleFunction('tp_attr', function($attrname) {
-			return $this->$attrname;
-		});
-		$twig->addFunction($tp_attr_function);
-		
-		// sitemap function for use in templates
-		$sitemap_function = new Twig_SimpleFunction('sitemap', function($showonlyvalid) {
-		    echo $this->sitemap($showonlyvalid);
-		});
-		$twig->addFunction($sitemap_function);
-		
-		
-		$twig->display($this->template . '.php', $this->content); // display the template passing in the content
 	}
 }
 
