@@ -38,8 +38,6 @@ class App
      */
     protected function __construct()
     {
-        self::registerExceptionHandler();
-        self::initDotEnv();
     }
 
     /**
@@ -60,6 +58,15 @@ class App
      */
     private function __wakeup()
     {
+    }
+
+    /**
+     * Method to initialise application
+     */
+    public static function init()
+    {
+        self::registerExceptionHandler();
+        self::initDotEnv();
     }
 
     /**
