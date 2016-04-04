@@ -38,6 +38,8 @@ class App
      */
     protected function __construct()
     {
+        self::registerExceptionHandler();
+        self::initDotEnv();
     }
 
     /**
@@ -61,15 +63,6 @@ class App
     }
 
     /**
-     * Method to initialise application
-     */
-    public static function init()
-    {
-        self::registerExceptionHandler();
-        self::initDotEnv();
-    }
-
-    /**
      * Method for registering an exception handler
      */
     private static function registerExceptionHandler()
@@ -82,11 +75,11 @@ class App
     /**
      * Loads the application
      */
-    public static function load()
+    public function load()
     {
         $structure = Structure::init();
 
-        // build up template
+        // build up template if not 404
         Template::build($structure->current_page);
     }
 
