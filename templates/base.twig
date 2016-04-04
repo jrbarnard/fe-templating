@@ -12,52 +12,58 @@
         <meta name="description" content="{{ getPageDescription() }}" />
     {% endif %}
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     {% block styles %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     {% endblock %}
 
 </head>
 <body>
+    <!-- container -->
+    <div class="container">
+        {{ dump() }}
 
-{{ dump() }}
+        {% block header %}
+            <header>
+                <h1>Navigation - all</h1>
+                <nav>
+                    {# Here is an example of getting the entire tree structure nav markup #}
 
-{% block header %}
-    <header>
-        <h1>Navigation - all</h1>
-        <nav>
-            {# Here is an example of getting the entire tree structure nav markup #}
+                </nav>
 
-        </nav>
+                <h2>Navigation - just top level</h2>
+                <nav>
+                    {# Here is an example of getting just the top level nav items and not recursively going down the tree #}
 
-        <h2>Navigation - just top level</h2>
-        <nav>
-            {# Here is an example of getting just the top level nav items and not recursively going down the tree #}
+                </nav>
+            </header>
+        {% endblock %}
 
-        </nav>
-    </header>
-{% endblock %}
-
-{% include 'parts/breadcrumbs.twig' %}
-
-
-
-{% block content %}
-    Content
-{% endblock %}
-
-
-{% include 'parts/sidenav.twig' %}
+        {% include 'parts/breadcrumbs.twig' %}
 
 
 
-{% block footer %}
-    <footer>
-        FOOTER
-    </footer>
-{% endblock %}
+        {% block content %}
+            Content
+        {% endblock %}
 
-{% block scripts %}
-    {# base scripts go here #}
-{% endblock %}
+
+        {% include 'parts/sidenav.twig' %}
+
+
+
+        {% block footer %}
+            <footer>
+                FOOTER
+            </footer>
+        {% endblock %}
+
+    </div>
+    <!-- end container -->
+
+    {% block scripts %}
+        {# base scripts go here #}
+    {% endblock %}
 </body>
 </html>
