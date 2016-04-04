@@ -18,9 +18,12 @@ NB: This is for the example set up, however a blank duplicate is below which doe
                     {% set dropdown = true %}
                 {% endif %}
 
-                <li class="{% if dropdown %}dropdown{% endif %}">
+                {# Create list item #}
+                <li class="{% if dropdown %}dropdown{% endif %} {% if route == currenturi %}active{% endif %}">
+
+                    {# Create new route #}
                     {% set currentpath = path ~ '/' ~ route %}
-                    <a href="{{ currentpath }}" {% if dropdown %}class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"{% endif %}>
+                    <a href="{{ currentpath }}" class="{% if dropdown %}dropdown-toggle{% endif %}" {% if dropdown %}data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"{% endif %}>
                         {{ data.title }}
 
                         {# Output caret symbol if has children (is dropdown) #}

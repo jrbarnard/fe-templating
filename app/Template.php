@@ -31,6 +31,7 @@ class Template
 //            ));
 
             $twig->addGlobal('page', $page->page);
+            $twig->addGlobal('currenturi', $page->uri);
             $twig->addGlobal('routes', $routes);
             dump($routes);
 
