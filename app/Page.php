@@ -52,22 +52,22 @@ class Page
         }
     }
 
-    /**
-     * Method to get page title
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->getPageProp('title');
-    }
-    /**
-     * Method to get page title
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->getPageProp('description');
-    }
+//    /**
+//     * Method to get page title
+//     * @return string
+//     */
+//    public function getTitle()
+//    {
+//        return $this->getPageProp('title');
+//    }
+//    /**
+//     * Method to get page title
+//     * @return string
+//     */
+//    public function getDescription()
+//    {
+//        return $this->getPageProp('description');
+//    }
 
     /**
      * Static method for generating the 404 page

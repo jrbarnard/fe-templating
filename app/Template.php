@@ -24,10 +24,13 @@ class Template
         if (self::templateFileExists($this->template_name)) {
             $twig = Twig::init();
 
-            $twig->loadTwigFunctions(array(
-                "getPageTitle" => array($page, 'getTitle'),
-                "getPageDescription" => array($page, 'getDescription')
-            ));
+            // example of loading twig function in batches
+//            $twig->loadTwigFunctions(array(
+//                "getPageTitle" => array($page, 'getTitle'),
+//                "getPageDescription" => array($page, 'getDescription')
+//            ));
+
+            $twig->addGlobal('page', $page->page);
 
             $twig->loadTemplate($this->template_name);
             $twig->render($this->content);
@@ -46,6 +49,11 @@ class Template
      */
     private static function getContent(Page $page) {
         $content_file_name = isset($page->page) && isset($page->page['content']) ? $page->page['content'] : false;
+
+        // check if just passed in via structure
+        if (is_array($content_file_name)) {
+            return $content_file_name;
+        }
 
         if (true === self::doesContentFileExist($content_file_name)) {
             $json = file_get_contents(self::getContentFilePath($content_file_name));

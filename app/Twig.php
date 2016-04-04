@@ -80,4 +80,14 @@ class Twig
             $this->twig_environment->addFunction($function);
         }
     }
+
+    /**
+     * Method to run twig add global method
+     * @param $name
+     * @param $value
+     */
+    public function addGlobal($name, $value)
+    {
+        $this->twig_environment->addGlobal($name, $value);
+    }
 }

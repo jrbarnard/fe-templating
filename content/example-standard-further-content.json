@@ -1,0 +1,10 @@
+{
+  "jumbo": {
+    "subtitle": "Check out the content file to view how the template and content link up",
+    "link": {
+      "link": "http://www.google.co.uk/",
+      "text": "Link off to google"
+    }
+  },
+  "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi assumenda autem consequuntur delectus distinctio dolorem ducimus eius ex, itaque iure minima nihil nisi non perspiciatis placeat, reiciendis sint tempore veniam!"
+}
