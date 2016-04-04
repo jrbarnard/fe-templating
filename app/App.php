@@ -83,6 +83,10 @@ class App
         Template::build($structure->current_page);
     }
 
+    /**
+     * Gets the base path of the complete application
+     * @return string
+     */
     public static function getBasePath()
     {
         return dirname(__DIR__) . DIRECTORY_SEPARATOR;
