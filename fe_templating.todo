@@ -29,8 +29,12 @@ Front end templating todo:
     ☐ Methods to handle different sidenav stuff -> creating twig functions for them
 
 Priorities:
-  ☐ refine usage of twig/content files
-    ☐ Allow people to use content directly in structure (check if array when getting content?)
-  ☐ Document how to use it properly includign twig and nav examples
-  ☐ Refine paths and using variables throughout (lots of hardcoded paths currently)
+ - Component get function ?
+ - Part get function ?
+ - Another page reusing carousel component
+ - Another page reusing carousel component but passing into body region (standard content) - can this be done?
+ - General layout extend for some templates (which has grid with sidebar)
+ - Sidenav (siblings)
+ - Breadcrumbs
+  ☐ Document how to use it properly including twig and nav examples
   ☐ Get Twig cache to work

@@ -23,7 +23,7 @@ class Twig
             "cache" => self::getTwigCachePath()
         );
         if ('dev' === getenv('ENVIRONMENT')) {
-            $twig_env_options["auto_reload"] = true;
+            $twig_env_options["debug"] = true;
         }
         $this->twig_environment = new Twig_Environment($this->twig_loader_filesystem, $twig_env_options); // create the environment
 
