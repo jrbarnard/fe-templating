@@ -79,7 +79,14 @@ class App
     {
         $structure = Structure::init();
         // build up template if not 404
-        Template::build($structure->current_page, $structure->routes);
+        $template = Template::build($structure->current_page);
+
+        $template->twig->addGlobal('routes', $structure->routes);
+        $template->twig->addGlobal('app', array(
+            'environment' => getenv('ENVIRONMENT')
+        ));
+
+        $template->render();
     }
 
     /**

@@ -10,8 +10,9 @@ class Template
     public $page;
     public $content = array();
     public $template_name = '';
+    public $twig;
 
-    public function __construct(Page $page, $routes)
+    public function __construct(Page $page)
     {
         $this->page = $page;
 
@@ -22,7 +23,7 @@ class Template
         }
 
         if (self::templateFileExists($this->template_name)) {
-            $twig = Twig::init();
+            $this->twig = Twig::init();
 
             // example of loading twig function in batches
 //            $twig->loadTwigFunctions(array(
@@ -30,18 +31,22 @@ class Template
 //                "getPageDescription" => array($page, 'getDescription')
 //            ));
 
-            $twig->addGlobal('page', $page->page);
-            $twig->addGlobal('currenturi', $page->uri);
-            $twig->addGlobal('routes', $routes);
-
-            $twig->loadTemplate($this->template_name);
-            $twig->render($this->content);
+            $this->twig->addGlobal('page', $page->page);
+            $this->twig->addGlobal('currenturi', $page->uri);
         }
     }
 
-    public static function build(Page $page, $routes = array())
+    public function render()
     {
-        return new Template($page, $routes);
+        if (self::templateFileExists($this->template_name)) {
+            $this->twig->loadTemplate($this->template_name);
+            $this->twig->render($this->content);
+        }
+    }
+
+    public static function build(Page $page)
+    {
+        return new Template($page);
     }
 
     /**
