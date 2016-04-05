@@ -4,15 +4,24 @@
     "slides": {
       "0": {
         "title": "slide 1",
-        "image": "image 1"
+        "image": {
+          "src": "image 1 source",
+          "alt": "image 1 alt"
+        }
       },
       "1": {
         "title": "slide 2",
-        "image": "image 2"
+        "image": {
+          "src": "image 2 source",
+          "alt": "image 2 alt"
+        }
       },
       "3": {
         "title": "slide 3",
-        "image": "image 3"
+        "image": {
+          "src": "image 3 source",
+          "alt": "image 3 alt"
+        }
       }
     }
   }

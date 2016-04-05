@@ -1,0 +1,18 @@
+{# An example of a reusable component that can be dropped in in any template #}
+{% if carousel %}
+    {% if carousel.title %}
+        <h2>{{ carousel.title }}</h2>
+    {% endif %}
+
+    {% if carousel.slides %}
+
+        {% for slide in carousel.slides %}
+            <div class="slide">
+                <h3>{{ slide.title }}</h3>
+                <img src="{{ slide.image.src }}" alt="{{ slide.image.alt }}">
+            </div>    
+        {% endfor %}
+
+    {% endif %}
+
+{%  endif %}
