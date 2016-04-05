@@ -92,6 +92,24 @@ class App
     }
 
     /**
+     * Method to get the application directory path
+     * @return string
+     */
+    public static function getAppPath()
+    {
+        return __DIR__ . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * Method to get the cache directory path
+     * @return string
+     */
+    public static function getCachePath()
+    {
+        return self::getAppPath() . 'cache' . DIRECTORY_SEPARATOR;
+    }
+
+    /**
      * Method to initialise dotenv on base path
      */
     private static function initDotEnv()

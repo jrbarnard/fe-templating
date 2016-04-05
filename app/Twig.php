@@ -18,7 +18,14 @@ class Twig
     {
         // store the location of the templates
         $this->twig_loader_filesystem = new Twig_Loader_Filesystem(Template::getTemplatePath());
-        $this->twig_environment = new Twig_Environment($this->twig_loader_filesystem); // create the environment
+
+        $twig_env_options = array(
+            "cache" => self::getTwigCachePath()
+        );
+        if ('dev' === getenv('ENVIRONMENT')) {
+            $twig_env_options["auto_reload"] = true;
+        }
+        $this->twig_environment = new Twig_Environment($this->twig_loader_filesystem, $twig_env_options); // create the environment
 
         if ('dev' === getenv('ENVIRONMENT')) {
             $this->twig_environment->enableDebug();
@@ -89,5 +96,14 @@ class Twig
     public function addGlobal($name, $value)
     {
         $this->twig_environment->addGlobal($name, $value);
+    }
+
+    /**
+     * Method to get the specific twig cache path
+     * @return string
+     */
+    public static function getTwigCachePath()
+    {
+        return App::getCachePath() . 'twig' . DIRECTORY_SEPARATOR;
     }
 }
