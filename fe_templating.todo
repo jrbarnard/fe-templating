@@ -29,12 +29,11 @@ Front end templating todo:
     ☐ Methods to handle different sidenav stuff -> creating twig functions for them
 
 Priorities:
- - Component get function ?
- - Part get function ?
+ - Update to bootstrap 4
  - Another page reusing carousel component
  - Another page reusing carousel component but passing into body region (standard content) - can this be done?
- - General layout extend for some templates (which has grid with sidebar)
- - Sidenav (siblings)
  - Breadcrumbs (bootstrap)
- - Get laravel elixir - gulp and example assets folder structure (dist etc)
+    - Need to expose current uri struct array, will need to look at overall globals and twig context
+ - General layout extend for some templates (which has grid with sidebar)
+ - Sidenav (siblings and other options)
  - Document how to use it properly including twig and nav examples
