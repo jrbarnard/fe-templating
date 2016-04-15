@@ -34,12 +34,17 @@ class Template
         if (self::templateFileExists($this->template_name)) {
             $this->twig = Twig::init();
 
-            // example of loading twig function in batches
+            /**
+             * Load twig functions in batches
+             */
 //            $twig->loadTwigFunctions(array(
 //                "getPageTitle" => array($page, 'getTitle'),
 //                "getPageDescription" => array($page, 'getDescription')
 //            ));
 
+            /**
+             * Add global vars for use in templates
+             */
             $this->twig->addGlobal('page', $page->page);
             $this->twig->addGlobal('currenturi', $page->uri);
         }

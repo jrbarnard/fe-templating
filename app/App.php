@@ -78,15 +78,27 @@ class App
      */
     public function load()
     {
+        /**
+         * Initialise the structure and store the object
+         */
         $structure = Structure::init();
-        // build up template if not 404
+
+        /**
+         * Take the current page Object the structure built for us and build the template for it
+         */
         $template = Template::build($structure->current_page);
 
-        $template->twig->addGlobal('routes', $structure->routes);
+        /**
+         * Run some global template set up
+         */
         $template->twig->addGlobal('app', array(
             'environment' => getenv('ENVIRONMENT')
         ));
+        $template->twig->addGlobal('routes', $structure->routes);
 
+        /**
+         * render the template
+         */
         $template->render();
     }
 
