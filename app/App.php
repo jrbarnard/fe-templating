@@ -8,6 +8,7 @@ use Whoops;
 /**
  * Class App
  * Singleton
+ * Builds up the fundamental backbone of the app and calls it's child processes
  *
  * @package App
  */

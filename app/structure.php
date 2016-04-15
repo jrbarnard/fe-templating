@@ -6,6 +6,11 @@ use \Exception;
 use App\Exceptions\NotFoundException;
 use App\Twig;
 
+/**
+ * Class Structure
+ * Deals with the json structure, gets it and uses the uri structure to locate the page we're on
+ * @package App
+ */
 class Structure
 {
     public static $json_filename = 'structure.json';
@@ -21,15 +26,24 @@ class Structure
 
     protected function __construct()
     {
+        // get and convert json structure to an assoc arr
         $this->json = $this->getStructure();
         $this->routes = $this->convertJsonToAssocArr($this->json);
 
-        // get and store uri info
+        /**
+         * get and store uri info (store 3 bits of information on it:
+         * actual route: /test/a/uri
+         * array of routes: ['test', 'a', 'route']
+         * levels in routes, simply a count of the array
+         */
         $this->uri = self::currentUri();
         $this->uri_structure = self::uriStructure($this->uri);
         $this->levels = count($this->uri_structure);
 
-        // get the full request pages checking against the routes structure
+        /**
+         * get the full request pages checking against the routes structure
+         * If we hit a 404 (page can't be found), we will catch the exception thrown and set the page to 404.
+         */
         try {
             // search for and store current page
             $this->pages = $this->getRequestPages();
@@ -39,7 +53,10 @@ class Structure
             $this->is404 = true;
         }
 
-        // get current page, or set up 404
+        /**
+         * By not just existing and setting up the 404 page as standard, we get to handle the 404 through twig.
+         * Else just set up current page
+         */
         if (false === $this->is404) {
             $this->current_page = $this->pages[$this->levels - 1];
         } else {
@@ -47,6 +64,10 @@ class Structure
         }
     }
 
+    /**
+     * Static method for initialising an instance of structure
+     * @return Structure
+     */
     public static function init()
     {
         return new Structure();

@@ -5,6 +5,11 @@ namespace App;
 use App\Page;
 use App\Twig;
 
+/**
+ * Class Template
+ * Takes a page, uses to render a twig template
+ * @package App
+ */
 class Template
 {
     public $page;
@@ -12,6 +17,10 @@ class Template
     public $template_name = '';
     public $twig;
 
+    /**
+     * Template constructor.
+     * @param \App\Page $page
+     */
     public function __construct(Page $page)
     {
         $this->page = $page;
@@ -36,6 +45,10 @@ class Template
         }
     }
 
+    /**
+     * Method that will render the twig template stored
+     * @throws \Exception
+     */
     public function render()
     {
         if (self::templateFileExists($this->template_name)) {
@@ -44,6 +57,11 @@ class Template
         }
     }
 
+    /**
+     * Method that takes the current page and builds up the template object for it
+     * @param \App\Page $page
+     * @return Template
+     */
     public static function build(Page $page)
     {
         return new Template($page);

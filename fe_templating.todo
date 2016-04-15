@@ -35,6 +35,6 @@ Priorities:
  - Another page reusing carousel component but passing into body region (standard content) - can this be done?
  - General layout extend for some templates (which has grid with sidebar)
  - Sidenav (siblings)
- - Breadcrumbs
-  ☐ Document how to use it properly including twig and nav examples
-  ☐ Get Twig cache to work
+ - Breadcrumbs (bootstrap)
+ - Get laravel elixir - gulp and example assets folder structure (dist etc)
+ - Document how to use it properly including twig and nav examples
