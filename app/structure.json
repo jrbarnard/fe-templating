@@ -22,19 +22,19 @@
     },
     "locations": {
       "title": "Locations",
-      "template": "",
-      "content": "",
+      "template": "location-listing",
       "children": {
         "location_1": {
           "title": "Location 1",
+          "template": "location-detail",
           "children": {
             "further_info": {
               "title": "Location 1 further info",
-              "template": "example-template",
-              "content": "example-content"
+              "template": "standard-content"
             },
             "contact_info": {
-              "title": "Location 1 contact info"
+              "title": "Location 1 contact info",
+              "template": "standard-content"
             }
           }
         }
