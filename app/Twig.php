@@ -8,23 +8,41 @@ use \Twig_SimpleFunction;
 use \Twig_Extension_Debug;
 use \Exception;
 
+/**
+ * Class Twig
+ * Builds up twig instance
+ *
+ * @package App
+ */
 class Twig
 {
     public $twig_loader_filesystem;
     public $twig_environment;
     public $template = false;
 
+    /**
+     * Twig constructor.
+     */
     public function __construct()
     {
-        // store the location of the templates
+        /**
+         * store the location of the templates with twig
+         */
         $this->twig_loader_filesystem = new Twig_Loader_Filesystem(Template::getTemplatePath());
 
+        /**
+         * Set up environment information
+         */
         $twig_env_options = array(
             "cache" => self::getTwigCachePath()
         );
         if ('dev' === getenv('ENVIRONMENT')) {
             $twig_env_options["debug"] = true;
         }
+
+        /**
+         * Generate thw twig environment
+         */
         $this->twig_environment = new Twig_Environment($this->twig_loader_filesystem, $twig_env_options); // create the environment
 
         if ('dev' === getenv('ENVIRONMENT')) {
@@ -39,6 +57,10 @@ class Twig
 //        ));
     }
 
+    /**
+     * Method to initialise a twig object
+     * @return Twig
+     */
     public static function init()
     {
         return new Twig();
