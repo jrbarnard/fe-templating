@@ -6,3 +6,6 @@
 
 #environment vars
 .env
+
+#vagrant
+/.vagrant
