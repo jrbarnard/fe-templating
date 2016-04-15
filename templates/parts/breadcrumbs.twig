@@ -1,7 +1,12 @@
 {% if page.breadcrumbs %}
+    {{ dump() }}
 	<nav class="breadcrumbs">
-		<h2>Breadcrumbs</h2>
 		{# Here is an example to get the breadcrumbs for a page (this will auto generate them based off the uri structure) #}
-		{# {% getBreadcrumbs() %} #}
+        <ol class="breadcrumb">
+
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active">Data</li>
+        </ol>
 	</nav>
 {% endif %}
