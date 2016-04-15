@@ -9,7 +9,6 @@ class Page
     public $uri = '';
     public $level = 0;
     public $page = array(
-        "hidden" => false,
         "breadcrumbs" => true
     );
 
@@ -107,7 +106,8 @@ class Page
             'page' => array(
                 'title' => '404 - Page not found',
                 'description' => 'Your page wasn\'t found',
-                'template' => '404'
+                'template' => '404',
+                'breadcrumbs' => false
             )
         ));
     }
