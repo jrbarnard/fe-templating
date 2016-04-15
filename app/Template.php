@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Exceptions\NotFoundException;
 use App\Page;
 use App\Twig;
 
@@ -20,6 +21,7 @@ class Template
     /**
      * Template constructor.
      * @param \App\Page $page
+     * @throws NotFoundException
      */
     public function __construct(Page $page)
     {
@@ -47,6 +49,8 @@ class Template
              */
             $this->twig->addGlobal('page', $page->page);
             $this->twig->addGlobal('currenturi', $page->uri);
+        } else {
+            throw new NotFoundException('A template file does not exist for this route');
         }
     }
 
