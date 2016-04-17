@@ -94,7 +94,10 @@ class App
         $template->twig->addGlobal('app', array(
             'environment' => getenv('ENVIRONMENT')
         ));
-        $template->twig->addGlobal('routes', $structure->routes);
+        $template->twig->addGlobal('structure', array(
+            'routes' => $structure->routes,
+            'pages' => $structure->pages
+        ));
 
         /**
          * render the template

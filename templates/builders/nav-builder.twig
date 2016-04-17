@@ -19,7 +19,7 @@ NB: This is for the example set up, however a blank duplicate is below which doe
                 {% endif %}
 
                 {# Create list item #}
-                <li class="{% if dropdown %}dropdown{% endif %} {% if route == currenturi %}active{% endif %}">
+                <li class="{% if dropdown %}dropdown{% endif %} {% if route == current_page.uri %}active{% endif %}">
 
                     {# Create new route #}
                     {% set currentpath = path ~ '/' ~ route %}
@@ -64,7 +64,7 @@ NB: This is for the example set up, however a blank duplicate is below which doe
                 {% endif %}
 
                 {# Create list item #}
-                <li class="{% if route == currenturi %}active{% endif %}">
+                <li class="{% if route == current_page.uri %}active{% endif %}">
 
                     {# Create new route #}
                     {% set currentpath = path ~ '/' ~ route %}

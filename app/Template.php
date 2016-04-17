@@ -45,10 +45,13 @@ class Template
 //            ));
 
             /**
-             * Add global vars for use in templates
+             * Add global page var into global
              */
-            $this->twig->addGlobal('page', $page->page);
-            $this->twig->addGlobal('currenturi', $page->uri);
+            $this->twig->addGlobal('current_page', array_merge(
+                $page->page,
+                array('uri' => $page->uri)
+            ));
+
         } else {
             throw new NotFoundException('A template file does not exist for this route');
         }
