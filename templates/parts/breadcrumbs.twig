@@ -1,12 +1,30 @@
-{% if page.breadcrumbs %}
-    {{ dump() }}
+{% if current_page.breadcrumbs %}
 	<nav class="breadcrumbs">
 		{# Here is an example to get the breadcrumbs for a page (this will auto generate them based off the uri structure) #}
         <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            {% set uri = '' %}
 
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Library</a></li>
-            <li class="active">Data</li>
+            {% for page in structure.pages %}
+
+                {# Check if page is current, change breadcrumb accordingly #}
+                {% set active = false %}
+                {% set class = '' %}
+                {% if page.uri == current_page.uri %}
+                    {% set active = true %}
+                    {% set class = 'active' %}
+                {% endif %}
+
+                <li class="{{ class }}">
+                    {% if active == true %}
+                        {{ page.page.title }}
+                    {% else %}
+                        {% set uri = uri ~ '/' ~ page.uri %}
+                        <a href="{{ uri }}">{{ page.page.title }}</a>
+                    {% endif %}
+                </li>
+
+            {% endfor %}
         </ol>
 	</nav>
 {% endif %}
