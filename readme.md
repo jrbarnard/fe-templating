@@ -11,8 +11,9 @@ This project is made to help rapid development of front end website prototypes w
 
 ## Project setup ##
 
-Clone / download the framework into your project directory.
-Run a webserver and point to the project directory
+1. Clone / download the framework into your project directory.
+2. Run composer install in the project root, if you don't have composer download [here](https://getcomposer.org/)
+3. Run a webserver and point it to the project directory
  - You can either do this by using Wamp, Mamp, Xampp, Vagrant etc.
  - Or by running the utility helper:
     - In the root

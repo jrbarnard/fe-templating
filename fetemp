@@ -7,18 +7,29 @@ $validCommands = array(
 $command = isset($argv[1]) && in_array($argv[1], $validCommands) ? $argv[1] : false;
 
 if (false === $command) {
-    echo "\n";
-    echo "You must pass a valid command\n";
-    echo "Valid commands are:\n";
+    pl("\nYou must pass a valid command");
+    pl("Valid commands are:");
 
     foreach($validCommands as $command) {
-        echo "\t" . $command . "\n";
+        pl("\t" . $command);
     }
-    echo "\n";
+    pl();
 }
 
 if ("serve" === $command) {
-    echo "Starting php development web server\n";
-    echo "Available at localhost:8000\n";
-    exec("cd public && php -S localhost:8000");
+    $host = "localhost:8000";
+
+    pl("Starting php development web server");
+    pl("Available at http://" . $host);
+    exec("open http://" . $host);
+    exec("php -S " . $host . " App/Console/Routing.php");
+}
+
+
+/**
+ * Helper function to print out a line with new line
+ */
+function pl($text = "")
+{
+    echo $text . "\n";
 }
