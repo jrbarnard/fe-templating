@@ -29,11 +29,12 @@ Front end templating todo:
     ☐ Methods to handle different sidenav stuff -> creating twig functions for them
 
 Priorities:
- - Update to bootstrap 4
  - Another page reusing carousel component
  - Another page reusing carousel component but passing into body region (standard content) - can this be done?
- - Breadcrumbs (bootstrap)
-    - Need to expose current uri struct array, will need to look at overall globals and twig context
  - General layout extend for some templates (which has grid with sidebar)
  - Sidenav (siblings and other options)
  - Document how to use it properly including twig and nav examples
+ - utility php server serve
+ - nginx redirect, so don't rely on vhost server config
+ - extension api
+ - license
