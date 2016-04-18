@@ -18,7 +18,7 @@
       "title": "Example standard further page",
       "description": "This page aims to show how you can load in more info via the structure as well as content through a file, but reuse templates",
       "template": "standard-content",
-      "content": "example-standard-further-content"
+      "content": "example-standard-further"
     },
     "locations": {
       "title": "Locations",
