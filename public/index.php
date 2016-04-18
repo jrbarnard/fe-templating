@@ -3,10 +3,9 @@
 set_include_path(dirname(__DIR__));
 
 /**
- * Get the composer dependencies
+ * Autoload dependencies and Application
  */
 require 'vendor/autoload.php';
-require 'App/autoload.php';
 
 use \App\App;
 

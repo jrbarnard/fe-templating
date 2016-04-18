@@ -15,5 +15,9 @@
             "name": "James Barnard",
             "email": "james.r.barnard@gmail.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {"App\\": "App/"}
+    }
+
 }
