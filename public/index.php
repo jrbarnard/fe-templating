@@ -1,11 +1,8 @@
 <?php
-
-set_include_path(dirname(__DIR__));
-
 /**
  * Autoload dependencies and Application
  */
-require 'vendor/autoload.php';
+require dirname(__DIR__) . '/vendor/autoload.php';
 
 use \App\App;
 
