@@ -22,7 +22,7 @@ if ("serve" === $command) {
     pl("Starting php development web server");
     pl("Available at http://" . $host);
     exec("open http://" . $host);
-    exec("php -S " . $host . " App/Console/Routing.php");
+    exec("php -S " . $host . " -t public/");
 }
 
 

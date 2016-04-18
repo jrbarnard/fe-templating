@@ -1,5 +1,4 @@
 Priorities:
     - couple of additional pages to show differing types of extends and template sharing / content (carousel etc? - other bootstrap stuff)
-    - nginx redirect, so don't rely on vhost server config
     - extension api
     - Further documentation

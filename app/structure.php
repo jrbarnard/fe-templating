@@ -113,16 +113,14 @@ class Structure
     }
 
     /**
-     * Method that gets uri string from get 'p' param
+     * Method that gets uri string
      * @return string
      */
     public static function currentUri()
     {
-        if (empty($_GET['p'])) {
-            $_GET['p'] = '/';
-        }
-
-        return $_GET['p'];
+        $url = parse_url($_SERVER['REQUEST_URI']);
+        $path = isset($url['path']) && !empty($url['path']) && $url['path'] !== '/' ? mb_substr($url['path'], 1) : '/';
+        return $path;
     }
 
     /**
