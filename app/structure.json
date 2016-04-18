@@ -32,13 +32,19 @@
             "location_text": "Location 1 detail text"
           },
           "children": {
-            "further_info": {
+            "info": {
               "title": "Location 1 further info",
-              "template": "standard-content"
+              "template": "standard-content",
+              "content": {
+                "body": "<p>Further info for location 1 - raw html</p>"
+              }
             },
-            "contact_info": {
+            "contact": {
               "title": "Location 1 contact info",
-              "template": "standard-content"
+              "template": "standard-content",
+              "content": {
+                "body": "<p>Contact info for location 1 - raw html</p>"
+              }
             }
           }
         },
