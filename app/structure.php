@@ -4,7 +4,6 @@ namespace App;
 
 use \Exception;
 use App\Exceptions\NotFoundException;
-use App\Twig;
 
 /**
  * Class Structure
@@ -13,17 +12,56 @@ use App\Twig;
  */
 class Structure
 {
+    /**
+     * @var string
+     */
     public static $json_filename = 'structure.json';
-    public $json = ''; // stores the json structure as it comes (valid or not)
-    public $routes = array(); // stores the routes object within structure
-    public $uri = ''; // stores uri string e.g foo/bar
-    public $uri_structure = array(); // stores uri in array e.g array('foo', 'bar')
-    public $levels = 1; // stores number of uri levels in current request
-    public $is404 = false; // records if we've hit a 404 or not
 
+    /**
+     * stores the json structure as it comes (valid or not)
+     * @var mixed|string
+     */
+    public $json = '';
+
+    /**
+     * stores the routes object within structure
+     * @var array|mixed
+     */
+    public $routes = array();
+
+    /**
+     * stores uri string e.g foo/bar
+     * @var string
+     */
+    public $uri = '';
+
+    /**
+     * stores uri in array e.g array('foo', 'bar')
+     * @var array
+     */
+    public $uri_structure = array();
+
+    /**
+     * stores number of uri levels in current request
+     * @var int
+     */
+    public $levels = 1;
+
+    /**
+     * records if we've hit a 404 or not
+     * @var bool
+     */
+    public $is404 = false;
+
+    /**
+     * To store array of pages for each point in the route
+     * @var Page|array|bool
+     */
     public $pages = array();
 
-
+    /**
+     * Structure constructor.
+     */
     protected function __construct()
     {
         // get and convert json structure to an assoc arr
@@ -45,7 +83,7 @@ class Structure
          * If we hit a 404 (page can't be found), we will catch the exception thrown and set the page to 404.
          */
         try {
-            // search for and store current page
+            // search for and store current pages
             $this->pages = $this->getRequestPages();
         } catch (NotFoundException $e) {
             // trigger 404
