@@ -22,11 +22,15 @@
     },
     "locations": {
       "title": "Locations",
-      "template": "location-listing",
+      "template": "listing",
+      "content": "locations-listing",
       "children": {
         "location_1": {
           "title": "Location 1",
           "template": "location-detail",
+          "content": {
+            "location_text": "Location 1 detail text"
+          },
           "children": {
             "further_info": {
               "title": "Location 1 further info",
@@ -36,6 +40,13 @@
               "title": "Location 1 contact info",
               "template": "standard-content"
             }
+          }
+        },
+        "location_2": {
+          "title": "Location 2",
+          "template": "location-detail",
+          "content": {
+            "location_text": "Location 2 detail text"
           }
         }
       }
