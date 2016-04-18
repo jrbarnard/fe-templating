@@ -18,5 +18,7 @@ if (false === $command) {
 }
 
 if ("serve" === $command) {
-    exec("php -S localhost:8000");
+    echo "Starting php development web server\n";
+    echo "Available at localhost:8000\n";
+    exec("cd public && php -S localhost:8000");
 }
