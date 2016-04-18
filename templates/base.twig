@@ -37,14 +37,16 @@
     <!-- container -->
     <div class="container">
 
+        {# Include the breadcrumbs #}
         {% include 'parts/breadcrumbs.twig' %}
 
+        {# Main content block #}
         {% block content %}
-            Content
+            {# Inner main block with the actual dynamic content in #}
+            {% block main %}
+                Content
+            {% endblock main %}
         {% endblock %}
-
-
-        {% include 'parts/sidenav.twig' %}
 
     </div>
     <!-- end container -->
