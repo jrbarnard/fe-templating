@@ -33,8 +33,6 @@ Priorities:
  - Another page reusing carousel component but passing into body region (standard content) - can this be done?
  - General layout extend for some templates (which has grid with sidebar)
  - Sidenav (siblings and other options)
- - Document how to use it properly including twig and nav examples
- - utility php server serve
  - nginx redirect, so don't rely on vhost server config
  - extension api
- - license
+ - Further documentation
