@@ -9,7 +9,7 @@
     },
     "example-standard": {
       "title": "Example standard page",
-      "template": "standard-content",
+      "template": "standard-content-wide",
       "content": {
         "body": "Example page body content"
       }
@@ -17,7 +17,7 @@
     "example-standard-further": {
       "title": "Example standard further page",
       "description": "This page aims to show how you can load in more info via the structure as well as content through a file, but reuse templates",
-      "template": "standard-content",
+      "template": "standard-content-wide",
       "content": "example-standard-further"
     },
     "locations": {
