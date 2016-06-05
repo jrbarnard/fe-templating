@@ -3,8 +3,6 @@
 namespace App;
 
 use App\Exceptions\NotFoundException;
-use App\Page;
-use App\Twig;
 
 /**
  * Class Template

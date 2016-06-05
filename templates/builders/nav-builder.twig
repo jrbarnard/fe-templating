@@ -2,85 +2,57 @@
 nav builder macro to build up a nav structure with special dropdown styling for the top nav
 NB: This is for the example set up, however a blank duplicate is below which doesn't apply special bootstrap classes and so can be duplicated and changed to how you need
 #}
-{% macro dropdown(routes, levels, show_hidden, level, path) %}
+{% macro dropdown(links) %}
+    {% for menuItem in links %}
+        {# Ensure not to load or show a hidden route #}
+        {% if menuItem.hidden == false %}
 
-    {% if level == null %}
-        {% set level = 1 %}
-    {% endif %}
+            {# Create list item #}
+            <li class="{% if menuItem.hasChildren %}dropdown{% endif %} {% if menuItem.active %}active{% endif %}">
 
-    {# If we are on first level apply standard top level class #}
-    <ul class="{% if level == 1 %}nav navbar-nav{% else %}dropdown-menu{% endif %}">
-        {% for route, data in routes %}
-            {# Ensure not to load or show a hidden route #}
-            {% if show_hidden is not defined or (false == show_hidden and false == data.hidden) %}
+                {# Create new route #}
+                <a href="{{ menuItem.uri }}" class="{% if menuItem.hasChildren %}dropdown-toggle{% endif %}" {% if menuItem.hasChildren %}data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"{% endif %}>
+                    {{ menuItem.title }}
 
-                {% if levels is not defined or (data.children and levels > level) %}
-                    {% set dropdown = true %}
-                {% endif %}
-
-                {# Create list item #}
-                <li class="{% if dropdown %}dropdown{% endif %} {% if route == current_page.uri %}active{% endif %}">
-
-                    {# Create new route #}
-                    {% set currentpath = path ~ '/' ~ route %}
-                    <a href="{{ currentpath }}" class="{% if dropdown %}dropdown-toggle{% endif %}" {% if dropdown %}data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"{% endif %}>
-                        {{ data.title }}
-
-                        {# Output caret symbol if has children (is dropdown) #}
-                        {% if dropdown %}
-                            <span class="caret"></span>
-                        {% endif %}
-                    </a>
-
-                    {# If route has children then recursively call macro #}
-                    {% if dropdown %}
-                        {% set level = level + 1 %}
-                        {{ _self.dropdown(data.children, levels, show_hidden, level, currentpath) }}
-                        {% set level = level - 1 %}
+                    {# Output caret symbol if has children (is dropdown) #}
+                    {% if menuItem.hasChildren %}
+                        <span class="caret"></span>
                     {% endif %}
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
+                </a>
 
+                {# If route has children then recursively call macro #}
+                {% if menuItem.hasChildren %}
+                    <ul class="dropdown-menu">
+                        {{ _self.dropdown(menuItem.children) }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endif %}
+    {% endfor %}
 {% endmacro %}
 
 
-{# nav builder macro to build up a nav structure with no special styling - NOT COMPLETE #}
-{% macro standard(routes, levels, show_hidden, level, path) %}
+{# nav builder macro to build up a nav structure with no special styling #}
+{% macro standard(links) %}
+    {% for menuItem in links %}
+        {# Ensure not to load or show a hidden route #}
+        {% if menuItem.hidden == false %}
 
-    {% if level == null %}
-        {% set level = 1 %}
-    {% endif %}
+            {# Create list item #}
+            <li class="{% if menuItem.active %}active{% endif %} {% if menuItem.current %}current{% endif %}">
 
-    <ul>
-        {% for route, data in routes %}
-            {# Ensure not to load or show a hidden route #}
-            {% if show_hidden is not defined or show_hidden is same as(true) or (false == show_hidden and false == data.hidden) %}
+                {# Create new route #}
+                <a href="{{ menuItem.uri }}">
+                    {{ menuItem.title }}
+                </a>
 
-
-                {% if levels is not defined or levels is same as(true) or (data.children and levels > level) %}
-                    {% set dropdown = true %}
+                {# If route has children then recursively call macro #}
+                {% if menuItem.hasChildren %}
+                    <ul>
+                        {{ _self.standard(menuItem.children) }}
+                    </ul>
                 {% endif %}
-
-                {# Create list item #}
-                <li class="{% if route == current_page.uri %}active{% endif %}">
-
-                    {# Create new route #}
-                    {% set currentpath = path ~ '/' ~ route %}
-                    <a href="{{ currentpath }}" class="">
-                        {{ data.title }}
-                    </a>
-
-                    {# If route has children then recursively call macro #}
-                    {% if dropdown and data.children %}
-                        {% set level = level + 1 %}
-                        {{ _self.standard(data.children, levels, show_hidden, level, currentpath) }}
-                        {% set level = level - 1 %}
-                    {% endif %}
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-
+            </li>
+        {% endif %}
+    {% endfor %}
 {% endmacro %}

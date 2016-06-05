@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Navigation\Navigation;
 use Dotenv\Dotenv;
 use Whoops;
 
@@ -22,7 +23,7 @@ class App
     /**
      * Returns the *Singleton* instance of this class.
      *
-     * @return Singleton The *Singleton* instance.
+     * @return App
      */
     public static function getInstance()
     {
@@ -91,12 +92,18 @@ class App
         /**
          * Run some global template set up
          */
-        $template->twig->addGlobal('app', array(
-            'environment' => getenv('ENVIRONMENT')
-        ));
-        $template->twig->addGlobal('structure', array(
-            'routes' => $structure->routes,
-            'pages' => $structure->pages
+        $template->twig->addGlobal('app', $_ENV);
+
+        /**
+         * Load navigation functions into twig
+         * This allows us to easily generate different menus in twig
+         */
+        $navigation = new Navigation($structure);
+        $template->twig->loadTwigFunctions(array(
+            'getMenu' => array($navigation, 'getMenu'),
+            'getBreadcrumbs' => array($navigation, 'getBreadcrumbs'),
+            'getParentMenu' => array($navigation, 'getParentMenu'),
+            'getSitemap' => array($navigation, 'getSitemap')
         ));
 
         /**

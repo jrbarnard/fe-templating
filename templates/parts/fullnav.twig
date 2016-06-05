@@ -1,5 +1,7 @@
-{% import "builders/nav-builder.twig" as nav_builders %}
-{#
-    Passing routes array, true to load full tree and true to show hidden routes
-#}
-{{ nav_builders.standard(structure.routes, true, true) }}
+{% import "builders/nav-builder.twig" as navBuilders %}
+
+{% set menu = getSitemap() %}
+
+<ul>
+    {{ navBuilders.standard(menu) }}
+</ul>
