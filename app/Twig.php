@@ -36,7 +36,7 @@ class Twig
 
         $this->buildTwigEnvironment();
 
-        if ('dev' === getenv('ENVIRONMENT')) {
+        if ('dev' === getenv('environment')) {
             $this->enableDebug();
         }
     }
@@ -73,7 +73,7 @@ class Twig
         $twig_env_options = array(
             "cache" => self::getTwigCachePath()
         );
-        if ('dev' === getenv('ENVIRONMENT')) {
+        if ('dev' === getenv('environment')) {
             // we have to set here otherwise we cache too much
             $twig_env_options["debug"] = true;
         }

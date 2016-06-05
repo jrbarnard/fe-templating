@@ -15,7 +15,12 @@ class Structure
     /**
      * @var string
      */
-    public static $json_filename = 'structure.json';
+    public static $jsonFilename = 'structure.json';
+
+    /**
+     * @var string
+     */
+    public $structureLocation = __DIR__ . DIRECTORY_SEPARATOR;
 
     /**
      * stores the json structure as it comes (valid or not)
@@ -64,6 +69,7 @@ class Structure
      */
     protected function __construct()
     {
+        $this->structureLocation = dirname(__DIR__) . DIRECTORY_SEPARATOR;
         // get and convert json structure to an assoc arr
         $this->json = $this->getStructure();
         $this->routes = $this->convertJsonToAssocArr($this->json);
@@ -118,15 +124,15 @@ class Structure
      */
     private function getStructure()
     {
-        if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . self::$json_filename)) {
-            $json = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . self::$json_filename);
+        if (file_exists($this->structureLocation . self::$jsonFilename)) {
+            $json = file_get_contents($this->structureLocation . self::$jsonFilename);
 
             if (false !== $json) {
                 return $json;
             }
         }
 
-        throw new Exception('Structure file: ' . self::$json_filename . ' not found in: ' . __DIR__);
+        throw new Exception('Structure file: ' . self::$jsonFilename . ' not found in: ' . $this->structureLocation);
     }
 
     /**
@@ -140,11 +146,11 @@ class Structure
         $arr = json_decode($json, true);
 
         if (null === $arr) {
-            throw new Exception('Json in ' . self::$json_filename . ' is invalid and couldn\'t decode');
+            throw new Exception('Json in ' . self::$jsonFilename . ' is invalid and couldn\'t decode');
         }
 
         if (false === isset($arr['routes'])) {
-            throw new Exception('Json in ' . self::$json_filename . ' didn\'t have a valid routes param');
+            throw new Exception('Json in ' . self::$jsonFilename . ' didn\'t have a valid routes param');
         }
 
         return $arr['routes'];
