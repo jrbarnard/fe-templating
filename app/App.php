@@ -105,7 +105,7 @@ class App
          */
         $navigation = new Navigation($structure);
         $template->twig->loadTwigFunctions(array(
-            'getFullMenu' => array($navigation, 'getFullMenu'),
+            'getMenu' => array($navigation, 'getMenu'),
             'getBreadcrumbs' => array($navigation, 'getBreadcrumbs'),
             'getParentMenu' => array($navigation, 'getParentMenu'),
             'getSitemap' => array($navigation, 'getSitemap')

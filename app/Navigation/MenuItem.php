@@ -30,7 +30,7 @@ class MenuItem
     /**
      * @var bool
      */
-    protected $hidden = false;
+    public $hidden = false;
 
     /**
      * @var string

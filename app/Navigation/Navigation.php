@@ -28,13 +28,12 @@ class Navigation
      * @param $levelsToGo
      * @return array
      */
-    public function getFullMenu($levelsToGo = null)
+    public function getMenu($levelsToGo = null)
     {
-        $menu = new Menu(
+        $menu = Menu::init(
             $this->structure->routes,
-            $this->structure->current_page->uri,
-            $levelsToGo
-        );
+            $this->structure->current_page->uri
+        )->setLevelsToIterate($levelsToGo)->generate();
         return $menu->toArray();
     }
 
@@ -58,11 +57,15 @@ class Navigation
 
     /**
      * Method that generates a menu of the entire set of routes, not honoring hidden, for sitemap purposes
-     * If you want a sitemap that honors hidden, use getFullMenu
+     * If you want a sitemap that honors hidden, use getMenu
      * @return string
      */
     public function getSitemap()
     {
-        return 'sitemap';
+        $menu = Menu::init(
+            $this->structure->routes,
+            $this->structure->current_page->uri
+        )->doNotHonorHidden()->generate();
+        return $menu->toArray();
     }
 }
