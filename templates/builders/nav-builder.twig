@@ -49,7 +49,7 @@ NB: This is for the example set up, however a blank duplicate is below which doe
                 {# If route has children then recursively call macro #}
                 {% if menuItem.hasChildren %}
                     <ul>
-                        {{ _self.dropdown(menuItem.children) }}
+                        {{ _self.standard(menuItem.children) }}
                     </ul>
                 {% endif %}
             </li>

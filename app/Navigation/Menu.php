@@ -113,7 +113,7 @@ class Menu
                 $level++; // set the level up one
 
                 // only get children if we haven't restricted recursion or we haven't hit the limit yet
-                if (is_nan($this->levelsToGo) || $level < $this->levelsToGo) {
+                if (is_null($this->levelsToGo) || $level < $this->levelsToGo) {
                     // pass the route children back into this method to get recursively and store in menuItem
                     $menuItem->setChildren(
                         $this->build(
