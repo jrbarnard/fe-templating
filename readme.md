@@ -8,14 +8,27 @@ This project is made to help rapid development of front end website prototypes w
 - It dynamically builds navigation based off your structure if you want it, helping to make quick, non-breaking changes in one place as opposed to multiple in a more traditional prototype.
 - It's extensible using the built in Extension API. - COMING SOON
 
+------
 
-## Project setup ##
+## Contents ##
+
+1. [Project setup](#projectsetup)
+2. [Usage](#usage)
+    - [Creating a template](#usage:template-create)
+    - [Linking a page to a template](#usage:page-template-linking)
+    - [Going further with page content](#usage:page-content-going-further)
+    - [Going further with templating](#usage:templating-going-further)
+3. [Development helpers](#devel)
+
+------
+
+## <a id="projectsetup">Project setup</a> ##
 
 1. Clone / download the framework into your project directory.
 2. Run composer install in the project root, if you don't have composer download [here](https://getcomposer.org/)
 3. Run a webserver and point it to the project directory
  - You can either do this by using Wamp, Mamp, Xampp, Vagrant etc.
- - Or by running the utility helper:
+ - Or by running the utility helper (only available in php 5.4+):
     - In the root
     ```
     php fetemp serve
@@ -23,11 +36,13 @@ This project is made to help rapid development of front end website prototypes w
 You will then have the example project set up!
 Take some time to look at the examples, how it's used and any comments.
 
-## Usage ##
+--
+
+## <a id="usage">Usage</a> ##
 
 You are free to use, extend, edit etc however you wish, however the generic usage to get you started is below.
 
-### Creating a template: ###
+### <a id="usage:template-create">Creating a template:</a> ###
 Create a file within the templates directory with a .twig extension, e.g location-detail.twig
 Most templates will extend a base or set of base templates, at the top of your page, ensure to extend the relevant one.
 ```twig
@@ -50,7 +65,7 @@ For example, in the example files base.twig it has a block called 'content', to 
 {% endblock %}
 ```
 
-### Linking a page to a template ###
+### <a id="usage:page-template-linking">Linking a page to a template</a> ###
 
 Now you have a template you can link a page up to it.
 
@@ -95,7 +110,7 @@ So you can add multiple pages that share templates:
 ```
 - Now if you visit {domain}/new-page and {domain}/new-page-2 you will see the same template, but varying content
 
-### Going further with page content ###
+### <a id="usage:page-content-going-further">Going further with page content</a> ###
 
 You can pass content as json directly to the content attribute of a page in structure.json, however if you have lots of per page content with heavily nested data, it can get very very messy.
 A better way sometimes would be to seperate out your content to a file and then reference that.
@@ -117,7 +132,46 @@ A better way sometimes would be to seperate out your content to a file and then 
 }
 ```
 
-### Going further with templating ###
+### <a id="usage:templating-going-further">Going further with templating</a> ###
 
-Because this uses Twig for templating, it means you can use all available 'twigness' in your prototype to assist with your development, for full documentation visit: [http://twig.sensiolabs.org/](http://twig.sensiolabs.org/)
+Because this uses Twig for templating, it means you can use all available 'twigness' in your prototype to assist with
+your development, for full documentation visit: [http://twig.sensiolabs.org/](http://twig.sensiolabs.org/)
+
+---
+
+## <a id="devel">Development helpers</a> ##
+
+To assist with development there are a few utilities and helpers you can use throughout prototyping.
+
+### <a id="devel:cache">Clearing caches</a> ###
+
+In order to speed up the load times of the prototype, we cache the twig templates so we don't have to render on every request.
+This however can cause problems when changing things, by default if you set your environment to dev, it will automatically
+prevent the twig cache, however if you change this, or you have old twig caches, it may become necessary to clear it.
+
+To do so, go to the command line in the root of the project and run:
+```
+php fetemp cache:clear
+```
+
+### <a id="devel:twig-dump">Twig dumper</a> ###
+
+The built in twig dumper is useful, however it isn't exactly easy to use / see the things you're dumping to the screen.
+
+As a development dependency this project uses the symfony dumper and there are a couple of twig functions available to you.
+
+In a twig template do the following:
+```twig
+
+<!-- This dumps and then dies to stop any further data from being printed to the screen, helpful when
+ encountering bugs and exceptions -->
+{{ dd(var) }}
+
+<!-- This dumps any var to the screen -->
+{{ d(var) }}
+
+<!-- This dumps the entire current context to the screen in a nice way -->
+{{ d(_context) }}
+
+```
 

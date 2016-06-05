@@ -1,5 +1,6 @@
 <?php
 // TODO: Swap out for symfony component
+// extract to a class to manage
 
 use App\Helpers\File;
 
