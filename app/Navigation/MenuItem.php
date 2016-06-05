@@ -18,9 +18,9 @@ class MenuItem
     protected $hasChildren = false;
 
     /**
-     * @var bool/int
+     * @var int
      */
-    protected $childrenCount = false;
+    protected $childrenCount = 0;
 
     /**
      * @var array of MenuItems
@@ -48,21 +48,30 @@ class MenuItem
     protected $current = false;
 
     /**
-     * MenuItem constructor.
-     * @param $route
+     * @var string
      */
-    public function __construct($route)
-    {
+    protected $title = '';
 
+
+    /**
+     * MenuItem constructor.
+     * @param $uri
+     * @param $title
+     */
+    public function __construct($uri, $title)
+    {
+        $this->title = $title;
+        $this->uri = $uri;
     }
 
     /**
-     * @param $route
+     * @param $uri
+     * @param $title
      * @return static
      */
-    public static function init($route)
+    public static function init($uri, $title)
     {
-        return new static($route);
+        return new static($uri, $title);
     }
 
     /**
