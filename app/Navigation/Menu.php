@@ -17,6 +17,11 @@ class Menu
     protected $currentUri = '/';
 
     /**
+     * @var null
+     */
+    protected $levelsToGo = null;
+
+    /**
      * A flag so we can notify up a recursion method that children are active
      * @var bool
      */
@@ -26,14 +31,16 @@ class Menu
      * Menu constructor.
      * @param array $routes
      * @param string $currentUri
+     * @param $levelsToGo
      * @throws \Exception
      */
-    public function __construct($routes = array(), $currentUri = '/')
+    public function __construct($routes = array(), $currentUri = '/', $levelsToGo = null)
     {
         if (!is_array($routes)) {
             throw new \Exception('When building a menu, you must pass a valid array of routes');
         }
 
+        $this->levelsToGo = $levelsToGo;
         $this->currentUri = $currentUri;
         $this->menuItems = $this->build($routes);
     }
@@ -43,7 +50,7 @@ class Menu
      * @param $routes
      * @param bool $honorHidden
      * @param int $level
-     * @param string $currentUri
+     * @param string $parentUri
      * @return array
      */
     protected function build($routes, $honorHidden = true, $level = 0, $parentUri = '')
@@ -79,24 +86,24 @@ class Menu
             if (isset($route['children']) && !empty($route['children'])) {
                 $level++; // set the level up one
 
-                // pass the route children back into this method to get recursively and store in menuItem
-                $menuItem->setChildren(
-                    $this->build(
-                        $route['children'],
-                        $honorHidden,
-                        $level,
-                        $currentUri
-                    )
-                );
+                if (is_nan($this->levelsToGo) || $level < $this->levelsToGo) {
+                    // pass the route children back into this method to get recursively and store in menuItem
+                    $menuItem->setChildren(
+                        $this->build(
+                            $route['children'],
+                            $honorHidden,
+                            $level,
+                            $currentUri
+                        )
+                    );
 
-                // TODO: SET PARENT TO ACTIVE IF ANY CHILDREN ARE ACTIVE ... LOOK INTO BASE PLUGIN
+                    if ($this->activeFlag) {
+                        $menuItem->setActive();
+                        $this->activeFlag = true;
+                    }
+                }
 
                 $level--; // bring level back down
-
-                if ($this->activeFlag) {
-                    $menuItem->setActive();
-                    $this->activeFlag = true;
-                }
             }
 
             if ($uri === $this->currentUri) {

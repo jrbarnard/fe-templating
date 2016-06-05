@@ -25,11 +25,16 @@ class Navigation
     /**
      * Method that generates the full menu of the routes into an array of MenuItems
      * It honors the hidden vars
+     * @param $levelsToGo
      * @return array
      */
-    public function getFullMenu()
+    public function getFullMenu($levelsToGo = null)
     {
-        $menu = new Menu($this->structure->routes, $this->structure->current_page->uri);
+        $menu = new Menu(
+            $this->structure->routes,
+            $this->structure->current_page->uri,
+            $levelsToGo
+        );
         return $menu->toArray();
     }
 

@@ -1,6 +1,6 @@
 {% import "builders/nav-builder.twig" as navBuilders %}
 
-{% set menu = getFullMenu() %}
+{% set menu = getFullMenu(2) %}
 
 <ul class="nav navbar-nav">
     {{ navBuilders.dropdown(menu) }}
