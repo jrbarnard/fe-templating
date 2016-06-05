@@ -54,13 +54,8 @@ class Twig
 
         // Add dev helper functions
         $this->loadTwigFunctions(array(
-            'dd' => function($var) { // die and dump
-                dump($var); // use symfony dumper
-                die();
-            },
-            'd' => function($var) { // just dump
-                dump($var); // use symfony dumper
-            }
+            'dd' => 'dd',
+            'd' => 'd'
         ));
 
         return $this;

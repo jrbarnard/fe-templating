@@ -69,7 +69,7 @@ class Structure
         $this->routes = $this->convertJsonToAssocArr($this->json);
 
         /**
-         * get and store uri info (store 3 bits of information on it:
+         * get and store uri info (store 3 bits of information on it):
          * actual route: /test/a/uri
          * array of routes: ['test', 'a', 'route']
          * levels in routes, simply a count of the array

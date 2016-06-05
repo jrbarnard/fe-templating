@@ -1,2 +1,5 @@
 {% import "builders/nav-builder.twig" as nav_builders %}
-{{ nav_builders.dropdown(structure.routes, 2) }}
+
+{{ getFullMenu() }}
+
+{#{{ nav_builders.dropdown(structure.routes, 2) }}#}

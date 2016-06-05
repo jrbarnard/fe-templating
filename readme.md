@@ -170,7 +170,7 @@ In a twig template do the following:
 <!-- This dumps any var to the screen -->
 {{ d(var) }}
 
-<!-- This dumps the entire current context to the screen in a nice way -->
+<!-- This dumps the entire current context to the screen -->
 {{ d(_context) }}
 
 ```

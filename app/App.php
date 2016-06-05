@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Navigation\Navigation;
 use Dotenv\Dotenv;
 use Whoops;
 
@@ -95,8 +96,19 @@ class App
             'environment' => getenv('ENVIRONMENT')
         ));
         $template->twig->addGlobal('structure', array(
-            'routes' => $structure->routes,
-            'pages' => $structure->pages
+//            'routes' => $structure->routes,
+//            'pages' => $structure->pages
+        ));
+
+        /**
+         * Load navigation functions into twig
+         */
+        $navigation = new Navigation($structure);
+        $template->twig->loadTwigFunctions(array(
+            'getFullMenu' => array($navigation, 'getFullMenu'),
+            'getBreadcrumbs' => array($navigation, 'getBreadcrumbs'),
+            'getParentMenu' => array($navigation, 'getParentMenu'),
+            'getSitemap' => array($navigation, 'getSitemap')
         ));
 
         /**
