@@ -54,7 +54,13 @@ class Twig
 
         // Add dev helper functions
         $this->loadTwigFunctions(array(
-
+            'dd' => function($var) { // die and dump
+                dump($var); // use symfony dumper
+                die();
+            },
+            'd' => function($var) { // just dump
+                dump($var); // use symfony dumper
+            }
         ));
 
         return $this;
@@ -72,9 +78,10 @@ class Twig
         $twig_env_options = array(
             "cache" => self::getTwigCachePath()
         );
-//        if ('dev' === getenv('ENVIRONMENT')) {
-//            $twig_env_options["debug"] = true;
-//        }
+        if ('dev' === getenv('ENVIRONMENT')) {
+            // we have to set here otherwise we cache too much
+            $twig_env_options["debug"] = true;
+        }
 
         /**
          * Generate thw twig environment
