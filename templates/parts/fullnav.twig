@@ -1,0 +1,7 @@
+{% import "builders/nav-builder.twig" as navBuilders %}
+
+{% set menu = getSitemap() %}
+
+<ul>
+    {{ navBuilders.standard(menu) }}
+</ul>

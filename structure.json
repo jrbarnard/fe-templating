@@ -1,0 +1,66 @@
+{
+  "routes": {
+    "/": {
+      "title": "Home",
+      "template": "home",
+      "content": "home",
+      "hidden": true,
+      "breadcrumbs": false
+    },
+    "example-standard": {
+      "title": "Example standard page",
+      "template": "standard-content-wide",
+      "content": {
+        "body": "Example page body content"
+      }
+    },
+    "example-standard-further": {
+      "title": "Example standard further page",
+      "description": "This page aims to show how you can load in more info via the structure as well as content through a file, but reuse templates",
+      "template": "standard-content-wide",
+      "content": "example-standard-further"
+    },
+    "locations": {
+      "title": "Locations",
+      "template": "listing",
+      "content": "locations-listing",
+      "children": {
+        "location_1": {
+          "title": "Location 1",
+          "template": "location-detail",
+          "content": {
+            "location_text": "Location 1 detail text"
+          },
+          "children": {
+            "info": {
+              "title": "Location 1 further info",
+              "template": "standard-content",
+              "content": {
+                "body": "<p>Further info for location 1 - raw html</p>"
+              }
+            },
+            "contact": {
+              "title": "Location 1 contact info",
+              "template": "standard-content",
+              "content": {
+                "body": "<p>Contact info for location 1 - raw html</p>"
+              }
+            }
+          }
+        },
+        "location_2": {
+          "title": "Location 2",
+          "template": "location-detail",
+          "content": {
+            "location_text": "Location 2 detail text"
+          }
+        }
+      }
+    },
+    "sitemap": {
+      "title": "sitemap",
+      "template": "sitemap",
+      "hidden": true
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{# An example of a reusable component that can be dropped in in any template #}
+{% if carousel and carousel.slides %}
+
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+
+        {% set count = 0 %}
+        <ol class="carousel-indicators">
+            {% for slide in carousel.slides if slide.image.src %}
+                <li data-target="#carousel-example-generic" data-slide-to="{{ count }}" class="{% if count == 0 %}active{% endif %}"></li>
+                {% set count = count + 1 %}
+            {% endfor %}
+        </ol>
+
+        {% set count = 0 %}
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+
+            {% for slide in carousel.slides if slide.image.src %}
+
+                <div class="item {% if count == 0 %}active{% endif %}">
+
+                    <img src="{{ slide.image.src }}" alt="{{ slide.image.alt }}">
+                    {% if slide.caption %}
+                        <div class="carousel-caption">
+                            <h3>{{ slide.caption.title }}</h3>
+                            <p>{{ slide.caption.text }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% set count = count + 1 %}
+
+            {% endfor %}
+
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+
+    </div>
+{%  endif %}

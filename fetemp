@@ -1,0 +1,53 @@
+<?php
+// TODO: Swap out for symfony component
+// extract to a class to manage
+
+use App\Helpers\File;
+
+/**
+ * Autoload dependencies
+ */
+require __DIR__ . '/vendor/autoload.php';
+
+$validCommands = array(
+    'serve',
+    'cache:clear'
+);
+
+$command = isset($argv[1]) && in_array($argv[1], $validCommands) ? $argv[1] : false;
+
+if (false === $command) {
+    pl("\nYou must pass a valid command");
+    pl("Valid commands are:");
+
+    foreach($validCommands as $validCommand) {
+        pl("\t" . $validCommand);
+    }
+    pl();
+}
+
+if ("serve" === $command) {
+    $host = "localhost:8000";
+
+    pl("Starting php development web server");
+    pl("Available at http://" . $host);
+    exec("open http://" . $host);
+    exec("php -S " . $host . " -t public/");
+}
+
+if ("cache:clear" === $command) {
+    pl("Emptying application caches");
+    $cacheDir = __DIR__ . "/App/cache";
+
+    // empty twig cache
+    File::rmdir($cacheDir . '/twig', true);
+}
+
+
+/**
+ * Helper function to print out a line with new line
+ */
+function pl($text = "")
+{
+    echo $text . "\n";
+}
