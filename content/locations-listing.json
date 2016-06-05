@@ -1,0 +1,14 @@
+{
+  "list": [
+    {
+      "title": "Location 1",
+      "link": "/locations/location_1",
+      "summary": "Location 1 summary"
+    },
+    {
+      "title": "Location 2",
+      "link": "/locations/location_2",
+      "summary": "Location 2 summary"
+    }
+  ]
+}

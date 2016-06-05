@@ -1,36 +1,6 @@
-Front end templating todo:
-  ☐ Example structure
-    ☐ Sitemap nav
-    ☐ Breadcrumbs
-      ☐ Turning breadcrumbs off
-    ☐ Main navigation
-    ☐ Top level navigation
-    ☐ Sibling navigation
-    ☐ hiding from navigation
-    ☐ Children
-    ☐ Template adding
-    ☐ Content adding
-  ☐ Base templates
-    ☐ Home - has own content?
-    ☐ Landing
-    ☐ content page
-    ☐ Twig
-      ☐ Using variables
-        ✔ Ensuring we don't get errors if they don't exist (twig has isset?) @done (15-09-26 23:32)
-      ☐ basic loops etc
-  ☐ Content
-    ☐ Defining variables for use
-    ☐ Home?
-    ☐ Landing pages
-      ☐ 2 types different content
-    ☐ Content pages
-      ☐ few different types with different mark up and how that works.
-  ☐ Sidenav
-    ☐ Methods to handle different sidenav stuff -> creating twig functions for them
-
 Priorities:
-  ☐ refine usage of twig/content files
-    ☐ Allow people to use content directly in structure (check if array when getting content?)
-  ☐ Document how to use it properly includign twig and nav examples
-  ☐ Refine paths and using variables throughout (lots of hardcoded paths currently)
-  ☐ Get Twig cache to work
+    - couple of additional pages to show differing types of extends and template sharing / content (carousel etc? - other bootstrap stuff)
+    - extension api
+    - Further documentation
+    - Clean up way menus are done, pre build array of menu objects with levels etc, as timber does
+    - Way to inject twig vars, without having to directly reference twig?

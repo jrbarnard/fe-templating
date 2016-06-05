@@ -1,78 +1,271 @@
 <?php
+
+namespace App;
+
+use \Exception;
+use App\Exceptions\NotFoundException;
+
 /**
- * Usage of front end templating structure:
- * - To add a page add in an array element as such:
- *   "uri-value" => array(
- *			"title" => "value to appear in nav and title meta etc",
- *			"template" => "which template to use (same as name of file in templates folder without the .php extension, if in sub folder, do subfolder/filename.",
- *			"content" =>which content file to use (optional)"
- *			"hidden" => true or false determines if hidden from general navigation across the site, default false (optional),
- *			"show-top-level" => true or false determines if should be shown in top level nav (optional),
- *			"breadcrumbs" => true or false determines if you want to show or hide breadcrumbs for that page, default is true (optional),
- *			"children" => an array of pages like this example, which will be iterated over for navigation etc (same options as above)
- *		)
- *
+ * Class Structure
+ * Deals with the json structure, gets it and uses the uri structure to locate the page we're on
+ * @package App
  */
+class Structure
+{
+    /**
+     * @var string
+     */
+    public static $jsonFilename = 'structure.json';
 
-$structure = array(
-	"/" => array(
-		"title" 		=> "Home",
-		"template" 		=> "home",
-		"hidden"		=> true,
-		"show-top-level" => true,
-		"breadcrumbs"	=> false
-	),
-	"example" => array(
-		"title" 	=> "Example Page",
-		"template" 	=> "example-template",
-		"content"	=> "example-content"
-	),
-	"locations" => array(
-		"title"		=> "Locations",
-		"template" 	=> "",
-		"content"	=> "",
-		"children" 	=> array(
-			"location_1" => array(
-				"title" 	=> "Location 1",
-				"template" 	=> "",
-				"children" 	=> array(
-					"further_info" => array(
-						"title" 	=> "Location 1 further info",
-						"template" 	=> "example-template",
-						"content"	=> "example-content"
-					),
-					"contact_info" => array(
-						"title" 	=> "Location 1 contact info",
-						"template" 	=> ""
-					)
-				)
-			),
-			"location_2" => array(
-				"title"		=> "Location 2",
-				"template"	=> ""
-			)
-		)
-	),
-	"staff" => array(
-		"title"		=> "Staff",
-		"template"	=> ""
-	),
-	"volunteers" => array(
-		"title"		=> "Volunteers",
-		"template"	=> ""
-	),
-	'contact_us' => array(
-		"title"		=> "Contact us",
-		"template"	=> "",
-		"hidden" => true,
-		"breadcrumbs"	=> false,
-		"show-top-level" => true
-	),
-	'sitemap' => array(
-		"title"		=> "Sitemap",
-		"template"	=> "sitemap",
-		// "hidden" => true
-	)
-)
+    /**
+     * @var string
+     */
+    public $structureLocation = __DIR__ . DIRECTORY_SEPARATOR;
 
-?>
+    /**
+     * stores the json structure as it comes (valid or not)
+     * @var mixed|string
+     */
+    public $json = '';
+
+    /**
+     * stores the routes object within structure
+     * @var array|mixed
+     */
+    public $routes = array();
+
+    /**
+     * stores uri string e.g foo/bar
+     * @var string
+     */
+    public $uri = '';
+
+    /**
+     * stores uri in array e.g array('foo', 'bar')
+     * @var array
+     */
+    public $uri_structure = array();
+
+    /**
+     * stores number of uri levels in current request
+     * @var int
+     */
+    public $levels = 1;
+
+    /**
+     * records if we've hit a 404 or not
+     * @var bool
+     */
+    public $is404 = false;
+
+    /**
+     * To store array of pages for each point in the route
+     * @var Page|array|bool
+     */
+    public $pages = array();
+
+    /**
+     * Structure constructor.
+     */
+    protected function __construct()
+    {
+        $this->structureLocation = dirname(__DIR__) . DIRECTORY_SEPARATOR;
+        // get and convert json structure to an assoc arr
+        $this->json = $this->getStructure();
+        $this->routes = $this->convertJsonToAssocArr($this->json);
+
+        /**
+         * get and store uri info (store 3 bits of information on it):
+         * actual route: /test/a/uri
+         * array of routes: ['test', 'a', 'route']
+         * levels in routes, simply a count of the array
+         */
+        $this->uri = self::currentUri();
+        $this->uri_structure = self::uriStructure($this->uri);
+        $this->levels = count($this->uri_structure);
+
+        /**
+         * get the full request pages checking against the routes structure
+         * If we hit a 404 (page can't be found), we will catch the exception thrown and set the page to 404.
+         */
+        try {
+            // search for and store current pages
+            $this->pages = $this->getRequestPages();
+        } catch (NotFoundException $e) {
+            // trigger 404
+            http_response_code(404);
+            $this->is404 = true;
+        }
+
+        /**
+         * By not just existing and setting up the 404 page as standard, we get to handle the 404 through twig.
+         * Else just set up current page
+         */
+        if (false === $this->is404) {
+            $this->current_page = $this->pages[$this->levels - 1];
+        } else {
+            $this->current_page = Page::page404();
+        }
+    }
+
+    /**
+     * Static method for initialising an instance of structure
+     * @return Structure
+     */
+    public static function init()
+    {
+        return new Structure();
+    }
+
+    /**
+     * Gets the structure file contents
+     * @return mixed
+     * @throws Exception
+     */
+    private function getStructure()
+    {
+        if (file_exists($this->structureLocation . self::$jsonFilename)) {
+            $json = file_get_contents($this->structureLocation . self::$jsonFilename);
+
+            if (false !== $json) {
+                return $json;
+            }
+        }
+
+        throw new Exception('Structure file: ' . self::$jsonFilename . ' not found in: ' . $this->structureLocation);
+    }
+
+    /**
+     * Converts Json to associative array of routes
+     * @param $json
+     * @return mixed
+     * @throws Exception
+     */
+    private function convertJsonToAssocArr($json)
+    {
+        $arr = json_decode($json, true);
+
+        if (null === $arr) {
+            throw new Exception('Json in ' . self::$jsonFilename . ' is invalid and couldn\'t decode');
+        }
+
+        if (false === isset($arr['routes'])) {
+            throw new Exception('Json in ' . self::$jsonFilename . ' didn\'t have a valid routes param');
+        }
+
+        return $arr['routes'];
+    }
+
+    /**
+     * Method that gets uri string
+     * @return string
+     */
+    public static function currentUri()
+    {
+        $url = parse_url($_SERVER['REQUEST_URI']);
+        $path = isset($url['path']) && !empty($url['path']) && $url['path'] !== '/' ? mb_substr($url['path'], 1) : '/';
+        return $path;
+    }
+
+    /**
+     * Method that takes a string uri and converts to an array
+     * e.g test/a/link => array('test', 'a', 'link');
+     * @param $uri
+     * @return array
+     */
+    public static function uriStructure($uri)
+    {
+        if (empty($uri)) {
+            return array('/');
+        }
+
+        $parts = explode('/', $uri);
+
+        // check for empty values, unset and then reindex
+        foreach ($parts as $key => $value) {
+            if ("" === $value) {
+                unset($parts[$key]);
+            }
+        }
+
+        $parts = array_values($parts);
+
+        if (empty($parts)) {
+            $parts = array('/');
+        }
+
+        return $parts;
+    }
+
+    /**
+     * Method that gets all the request pages
+     * @param bool $route
+     * @return Page|bool
+     * @throws NotFoundException
+     */
+    public function getRequestPages($route = false)
+    {
+        if (false === $route) {
+            $route = $this->getTrailingRoute();
+        }
+
+        // store a pointer so we can walk to array
+        $pointer = $this->routes;
+
+        $pages = array();
+
+        // iterate over pages
+        for ($i = 0; $i < $this->levels; $i++) {
+            if ($i > 0) {
+                $pointer = isset($pointer['children']) ? $pointer['children'] : array();
+            }
+
+            $pointer_page = $this->getRoute($this->uri_structure[$i], $pointer);
+            // if there is a page on this level as part of the uri structure
+            if (false !== $pointer_page) {
+
+                $pages[] = new Page(array(
+                    'uri' => $this->uri_structure[$i],
+                    'page' => $pointer_page,
+                    'level' => $i
+                ));
+
+                // there is a page so check if it is the one we're looking for
+                if ($this->uri_structure[$i] === $route) {
+                    return $pages;
+                }
+                // else set the pointer and iterate
+                $pointer = $pointer_page;
+            } else {
+                throw new NotFoundException('Route not found', 404);
+            }
+        }
+    }
+
+    /**
+     * Gets a route from a passed in routes array
+     * Basically just gets by object arrow notation
+     *
+     * @param $route - route slug
+     * @param $routes - array to check in
+     *
+     * @return route item or false if fails
+     */
+    private static function getRoute($route, $routes = array())
+    {
+        if (isset($routes[$route])) {
+            return $routes[$route];
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Simply gets the trailign route of the uri structure (i.e current route)
+     * @return mixed
+     */
+    private function getTrailingRoute()
+    {
+        return $this->uri_structure[$this->levels - 1];
+    }
+}

@@ -1,0 +1,58 @@
+{#
+nav builder macro to build up a nav structure with special dropdown styling for the top nav
+NB: This is for the example set up, however a blank duplicate is below which doesn't apply special bootstrap classes and so can be duplicated and changed to how you need
+#}
+{% macro dropdown(links) %}
+    {% for menuItem in links %}
+        {# Ensure not to load or show a hidden route #}
+        {% if menuItem.hidden == false %}
+
+            {# Create list item #}
+            <li class="{% if menuItem.hasChildren %}dropdown{% endif %} {% if menuItem.active %}active{% endif %}">
+
+                {# Create new route #}
+                <a href="{{ menuItem.uri }}" class="{% if menuItem.hasChildren %}dropdown-toggle{% endif %}" {% if menuItem.hasChildren %}data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"{% endif %}>
+                    {{ menuItem.title }}
+
+                    {# Output caret symbol if has children (is dropdown) #}
+                    {% if menuItem.hasChildren %}
+                        <span class="caret"></span>
+                    {% endif %}
+                </a>
+
+                {# If route has children then recursively call macro #}
+                {% if menuItem.hasChildren %}
+                    <ul class="dropdown-menu">
+                        {{ _self.dropdown(menuItem.children) }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+
+{# nav builder macro to build up a nav structure with no special styling #}
+{% macro standard(links) %}
+    {% for menuItem in links %}
+        {# Ensure not to load or show a hidden route #}
+        {% if menuItem.hidden == false %}
+
+            {# Create list item #}
+            <li class="{% if menuItem.active %}active{% endif %} {% if menuItem.current %}current{% endif %}">
+
+                {# Create new route #}
+                <a href="{{ menuItem.uri }}">
+                    {{ menuItem.title }}
+                </a>
+
+                {# If route has children then recursively call macro #}
+                {% if menuItem.hasChildren %}
+                    <ul>
+                        {{ _self.standard(menuItem.children) }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
