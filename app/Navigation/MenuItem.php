@@ -10,22 +10,22 @@ class MenuItem
     /**
      * @var int
      */
-    protected $level = 0;
+    public $level = 0;
 
     /**
      * @var bool
      */
-    protected $hasChildren = false;
+    public $hasChildren = false;
 
     /**
      * @var int
      */
-    protected $childrenCount = 0;
+    public $childrenCount = 0;
 
     /**
      * @var array of MenuItems
      */
-    protected $children = array();
+    public $children = array();
 
     /**
      * @var bool
@@ -35,22 +35,22 @@ class MenuItem
     /**
      * @var string
      */
-    protected $uri = '';
+    public $uri = '';
 
     /**
      * @var bool
      */
-    protected $active = false;
+    public $active = false;
 
     /**
      * @var bool
      */
-    protected $current = false;
+    public $current = false;
 
     /**
      * @var string
      */
-    protected $title = '';
+    public $title = '';
 
 
     /**

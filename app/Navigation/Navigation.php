@@ -30,7 +30,6 @@ class Navigation
     public function getFullMenu()
     {
         $menu = new Menu($this->structure->routes, $this->structure->current_page->uri);
-        dd($menu);
         return $menu->toArray();
     }
 

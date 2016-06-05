@@ -46,7 +46,7 @@ class Menu
      * @param string $currentUri
      * @return array
      */
-    protected function build($routes, $honorHidden = true, $level = 0, $currentUri = '')
+    protected function build($routes, $honorHidden = true, $level = 0, $parentUri = '')
     {
         $menuItems = array();
         foreach($routes as $uri => $route) {
@@ -55,7 +55,7 @@ class Menu
             if ($level === 0) {
                 $currentUri = '';
             }
-            $currentUri = mb_strpos($uri, '/') === 0 ? $uri : $currentUri . '/' . $uri;
+            $currentUri = mb_strpos($uri, '/') === 0 ? $uri : $parentUri . '/' . $uri;
 
             // generate title
             // will prioritise link title if available
