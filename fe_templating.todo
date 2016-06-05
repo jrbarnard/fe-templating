@@ -2,3 +2,5 @@ Priorities:
     - couple of additional pages to show differing types of extends and template sharing / content (carousel etc? - other bootstrap stuff)
     - extension api
     - Further documentation
+    - Clean up way menus are done, pre build array of menu objects with levels etc, as timber does
+    - Way to inject twig vars, without having to directly reference twig?

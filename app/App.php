@@ -22,7 +22,7 @@ class App
     /**
      * Returns the *Singleton* instance of this class.
      *
-     * @return Singleton The *Singleton* instance.
+     * @return App
      */
     public static function getInstance()
     {

@@ -16,8 +16,15 @@ use \Exception;
  */
 class Twig
 {
-    public $twig_loader_filesystem;
-    public $twig_environment;
+    /**
+     * @var Twig_Loader_Filesystem
+     */
+    public $twigLoaderFilesystem;
+
+    /**
+     * @var Twig_Environment
+     */
+    public $twigEnvironment;
     public $template = false;
 
     /**
@@ -25,36 +32,67 @@ class Twig
      */
     public function __construct()
     {
-        /**
-         * store the location of the templates with twig
-         */
-        $this->twig_loader_filesystem = new Twig_Loader_Filesystem(Template::getTemplatePath());
+        $this->buildTwigLoader();
 
+        $this->buildTwigEnvironment();
+
+        if ('dev' === getenv('ENVIRONMENT')) {
+            $this->enableDebug();
+        }
+    }
+
+    /**
+     * Enable debug settings with twig
+     * @return $this
+     */
+    protected function enableDebug()
+    {
+        $this->twigEnvironment->enableDebug();
+        $this->twigEnvironment->addExtension(
+            new Twig_Extension_Debug()
+        );
+
+        // Add dev helper functions
+        $this->loadTwigFunctions(array(
+
+        ));
+
+        return $this;
+    }
+
+    /**
+     * Generate the twig environment
+     * @return $this
+     */
+    protected function buildTwigEnvironment()
+    {
         /**
          * Set up environment information
          */
         $twig_env_options = array(
             "cache" => self::getTwigCachePath()
         );
-        if ('dev' === getenv('ENVIRONMENT')) {
-            $twig_env_options["debug"] = true;
-        }
+//        if ('dev' === getenv('ENVIRONMENT')) {
+//            $twig_env_options["debug"] = true;
+//        }
 
         /**
          * Generate thw twig environment
          */
-        $this->twig_environment = new Twig_Environment($this->twig_loader_filesystem, $twig_env_options); // create the environment
+        $this->twigEnvironment = new Twig_Environment($this->twigLoaderFilesystem, $twig_env_options);
 
-        if ('dev' === getenv('ENVIRONMENT')) {
-            $this->twig_environment->enableDebug();
-            $this->twig_environment->addExtension(
-                new Twig_Extension_Debug()
-            );
-        }
+        return $this;
+    }
 
-//        $this->loadTwigFunctions(array(
-//
-//        ));
+    /**
+     * store the location of the templates with twig
+     * @return $this
+     */
+    protected function buildTwigLoader()
+    {
+        $this->twigLoaderFilesystem = new Twig_Loader_Filesystem(Template::getTemplatePath());
+
+        return $this;
     }
 
     /**
@@ -76,7 +114,7 @@ class Twig
         if (false === $template_name) {
             throw new Exception('Need to pass a valid template name');
         }
-        $this->template = $this->twig_environment->loadTemplate($template_name . '.twig');
+        $this->template = $this->twigEnvironment->loadTemplate($template_name . '.twig');
     }
 
     /**
@@ -106,7 +144,7 @@ class Twig
     {
         foreach($helpers as $name => $method) {
             $function = new Twig_SimpleFunction($name, $method);
-            $this->twig_environment->addFunction($function);
+            $this->twigEnvironment->addFunction($function);
         }
     }
 
@@ -117,7 +155,7 @@ class Twig
      */
     public function addGlobal($name, $value)
     {
-        $this->twig_environment->addGlobal($name, $value);
+        $this->twigEnvironment->addGlobal($name, $value);
     }
 
     /**
