@@ -1,5 +1,10 @@
 <aside>
-	{% import "builders/nav-builder.twig" as nav_builders %}
-	{{ nav_builders.standard(structure.pages[0].page.children, true, false, 1, '/' ~ structure.pages[0].uri) }}
+	{% import "builders/nav-builder.twig" as navBuilders %}
+
+	{% set menu = getParentMenu() %}
+
+	<ul>
+		{{ navBuilders.standard(menu) }}
+	</ul>
 </aside>
 

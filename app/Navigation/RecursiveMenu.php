@@ -19,14 +19,32 @@ class RecursiveMenu extends Menu
     protected $activeFlag = false;
 
     /**
+     * @var string
+     */
+    protected $startingUri = '';
+
+    /**
+     * @var int
+     */
+    protected $startingLevel = 0;
+
+    /**
      * Method that takes the routes and builds the menu item array up
      * @param $routes
      * @param int $level
      * @param string $parentUri
      * @return array
      */
-    protected function build($routes, $level = 0, $parentUri = '')
+    protected function build($routes, $level = null, $parentUri = null)
     {
+        // check if we want to use our starting uri and levels
+        if (is_null($level)) {
+            $level = $this->startingLevel;
+        }
+        if (is_null($parentUri)) {
+            $parentUri  = $this->startingUri;
+        }
+
         $menuItems = array();
         foreach($routes as $uri => $route) {
 
@@ -108,6 +126,28 @@ class RecursiveMenu extends Menu
             $levels = null;
         }
         $this->levelsToGo = $levels;
+        return $this;
+    }
+
+    /**
+     * Method to set the starting level to generate the menu items from
+     * @param int $level
+     * @return $this
+     */
+    public function setStartingLevel($level = 0)
+    {
+        $this->startingLevel = $level;
+        return $this;
+    }
+
+    /**
+     * Method to set the starting uri to build uri's from when generating the menu items
+     * @param string $uri
+     * @return $this
+     */
+    public function setStartingUri($uri = '')
+    {
+        $this->startingUri = $uri;
         return $this;
     }
 }

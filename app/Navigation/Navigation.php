@@ -52,11 +52,19 @@ class Navigation
 
     /**
      * Method that generates a menu using the parent of the current location (route), so you get sibling MenuItems
+     * @param null $levelsToGo
      * @return array
      */
-    public function getParentMenu()
+    public function getParentMenu($levelsToGo = null)
     {
-        return 'parentmenu';
+        $menu = RecursiveMenu::init(
+            $this->structure->pages[0]->page['children'],
+            $this->structure->current_page->uri
+        )
+            ->setLevelsToIterate($levelsToGo)
+            ->setStartingUri('/' . $this->structure->pages[0]->uri)
+            ->generate();
+        return $menu->toArray();
     }
 
     /**
