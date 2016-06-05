@@ -30,7 +30,7 @@ class Navigation
      */
     public function getMenu($levelsToGo = null)
     {
-        $menu = Menu::init(
+        $menu = RecursiveMenu::init(
             $this->structure->routes,
             $this->structure->current_page->uri
         )->setLevelsToIterate($levelsToGo)->generate();
@@ -43,7 +43,11 @@ class Navigation
      */
     public function getBreadcrumbs()
     {
-        return 'breadcrumbs';
+        $breadcrumbs = BreadcrumbMenu::init(
+            $this->structure->pages,
+            $this->structure->current_page->uri
+        )->generate();
+        return $breadcrumbs->toArray();
     }
 
     /**
@@ -62,7 +66,7 @@ class Navigation
      */
     public function getSitemap()
     {
-        $menu = Menu::init(
+        $menu = RecursiveMenu::init(
             $this->structure->routes,
             $this->structure->current_page->uri
         )->doNotHonorHidden()->generate();
