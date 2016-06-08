@@ -15,7 +15,9 @@ class Serve extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ((float) phpversion() < 5.4) {
+        // This will go unused as the console component requires 5.5.9, but just incase we roll back to using a lower
+        // supported version
+        if (phpVersionLessThan('5.4')) {
             $output->writeln('You must have php version 5.4 or above to run this command');
             return;
         }

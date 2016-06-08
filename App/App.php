@@ -155,6 +155,14 @@ class App
      */
     public function console()
     {
+        if (phpVersionLessThan('5.5.9')) {
+            echo "\n";
+            echo "You need a minimum php version of 5.5.9 to run this command line tool, you can continue running the rest of the application";
+            echo "\n";
+            echo "\n";
+            exit();
+        }
+        
         $application = new Application();
         $console = new Console();
 
