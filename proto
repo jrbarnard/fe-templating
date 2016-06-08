@@ -4,50 +4,26 @@
  * Proto console helper
  */
 
-
 require __DIR__ . '/vendor/autoload.php';
 
+use App\App;
 use App\Helpers\File;
 
-$validCommands = array(
-    'serve',
-    'cache:clear'
-);
+// get the application instance
+$app = App::getInstance();
 
-$command = isset($argv[1]) && in_array($argv[1], $validCommands) ? $argv[1] : false;
+// get console component of the application
+$console = $app->console();
 
-if (false === $command) {
-    pl("\nYou must pass a valid command");
-    pl("Valid commands are:");
+// run the console component
+$console->run();
 
-    foreach($validCommands as $validCommand) {
-        pl("\t" . $validCommand);
-    }
-    pl();
-}
+exit();
 
-if ("serve" === $command) {
-    $host = "localhost:8000";
-
-    pl("Starting php development web server");
-    pl("Available at http://" . $host);
-    exec("open http://" . $host);
-    exec("php -S " . $host . " -t public/");
-}
-
-if ("cache:clear" === $command) {
-    pl("Emptying application caches");
-    $cacheDir = __DIR__ . "/App/cache";
-
-    // empty twig cache
-    File::rmdir($cacheDir . '/twig', true);
-}
-
-
-/**
- * Helper function to print out a line with new line
- */
-function pl($text = "")
-{
-    echo $text . "\n";
-}
+//if ("cache:clear" === $command) {
+//    pl("Emptying application caches");
+//    $cacheDir = __DIR__ . "/App/cache";
+//
+//    // empty twig cache
+//    File::rmdir($cacheDir . '/twig', true);
+//}

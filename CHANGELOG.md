@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Changelog
--
+- Basic use of symfony console component to clean up commands
 
 ## [1.0.1] - 2016-06-08
 ### Fixed

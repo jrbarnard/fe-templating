@@ -1,10 +1,11 @@
 <?php
-
 namespace App;
 
-use App\Navigation\Navigation;
-use Dotenv\Dotenv;
 use Whoops;
+use Dotenv\Dotenv;
+use App\Console\Console;
+use App\Navigation\Navigation;
+use Symfony\Component\Console\Application;
 
 /**
  * Class App
@@ -146,5 +147,23 @@ class App
     {
         $dotenv = new Dotenv(self::getBasePath());
         $dotenv->load();
+    }
+
+    /**
+     * Method that gets the console component of the application
+     * @return Application
+     */
+    public function console()
+    {
+        $application = new Application();
+        $console = new Console();
+
+        // loop over the commands to be registered and register them with the symfony console application
+        foreach($console->register() as $command) {
+            $command = new $command();
+            $console->registerCommand($application, $command);
+        }
+
+        return $application;
     }
 }
