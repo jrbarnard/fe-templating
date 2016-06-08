@@ -3,11 +3,9 @@
 /**
  * Proto console helper
  */
-
 require __DIR__ . '/vendor/autoload.php';
 
 use App\App;
-use App\Helpers\File;
 
 // get the application instance
 $app = App::getInstance();
@@ -17,13 +15,3 @@ $console = $app->console();
 
 // run the console component
 $console->run();
-
-exit();
-
-//if ("cache:clear" === $command) {
-//    pl("Emptying application caches");
-//    $cacheDir = __DIR__ . "/App/cache";
-//
-//    // empty twig cache
-//    File::rmdir($cacheDir . '/twig', true);
-//}

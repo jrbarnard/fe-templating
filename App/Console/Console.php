@@ -2,6 +2,7 @@
 namespace App\Console;
 
 use App\Console\Commands\Serve;
+use App\Console\Commands\CacheClear;
 use App\Console\Commands\BaseCommand;
 use Symfony\Component\Console\Application;
 
@@ -10,7 +11,8 @@ class Console
     public function register()
     {
         return array(
-            Serve::class
+            Serve::class,
+            CacheClear::class
         );
     }
 
