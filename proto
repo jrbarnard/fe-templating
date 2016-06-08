@@ -1,13 +1,13 @@
+#!/usr/bin/env php
 <?php
-// TODO: Swap out for symfony component
-// extract to a class to manage
+/**
+ * Proto console helper
+ */
+
+
+require __DIR__ . '/vendor/autoload.php';
 
 use App\Helpers\File;
-
-/**
- * Autoload dependencies
- */
-require __DIR__ . '/vendor/autoload.php';
 
 $validCommands = array(
     'serve',

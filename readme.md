@@ -35,7 +35,7 @@ This project is made to help rapid development of front end website prototypes w
  - Or by running the utility helper (only available in php 5.4+):
     - In the root
     ```
-    php fetemp serve
+    php proto serve
     ```
 You will then have the example project set up!
 Take some time to look at the examples, how it's used and any comments.
@@ -227,7 +227,7 @@ prevent the twig cache, however if you change this, or you have old twig caches,
 
 To do so, go to the command line in the root of the project and run:
 ```
-php fetemp cache:clear
+php proto cache:clear
 ```
 
 ### <a id="devel:twig-dump">Twig dumper</a> ###
