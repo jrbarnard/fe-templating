@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Proto console helper
+ */
+require __DIR__ . '/vendor/autoload.php';
+
+use App\App;
+
+// get the application instance
+$app = App::getInstance();
+
+// get console component of the application
+$console = $app->console();
+
+// run the console component
+$console->run();

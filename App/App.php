@@ -1,10 +1,11 @@
 <?php
-
 namespace App;
 
-use App\Navigation\Navigation;
-use Dotenv\Dotenv;
 use Whoops;
+use Dotenv\Dotenv;
+use App\Console\Console;
+use App\Navigation\Navigation;
+use Symfony\Component\Console\Application;
 
 /**
  * Class App
@@ -146,5 +147,31 @@ class App
     {
         $dotenv = new Dotenv(self::getBasePath());
         $dotenv->load();
+    }
+
+    /**
+     * Method that gets the console component of the application
+     * @return Application
+     */
+    public function console()
+    {
+        if (phpVersionLessThan('5.5.9')) {
+            echo "\n";
+            echo "You need a minimum php version of 5.5.9 to run this command line tool, you can continue running the rest of the application";
+            echo "\n";
+            echo "\n";
+            exit();
+        }
+        
+        $application = new Application();
+        $console = new Console();
+
+        // loop over the commands to be registered and register them with the symfony console application
+        foreach($console->register() as $command) {
+            $command = new $command();
+            $console->registerCommand($application, $command);
+        }
+
+        return $application;
     }
 }
