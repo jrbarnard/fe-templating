@@ -1,5 +1,5 @@
 <?php
-namespace App\Console\Commands;
+namespace Proto\Console\Commands;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class Serve
  * This command serves the application using php 5.4's built in server
- * @package App\Console\Commands
+ * @package Proto\Console\Commands
  */
 class Serve extends BaseCommand
 {

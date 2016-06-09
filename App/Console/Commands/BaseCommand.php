@@ -1,10 +1,11 @@
 <?php
-namespace App\Console\Commands;
+namespace Proto\Console\Commands;
+
 use Symfony\Component\Console\Command\Command;
 
 /**
  * Class BaseCommand
- * @package App\Console\Commands
+ * @package Proto\Console\Commands
  */
 abstract class BaseCommand extends Command
 {

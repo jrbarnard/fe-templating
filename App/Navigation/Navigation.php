@@ -1,10 +1,10 @@
 <?php
-namespace App\Navigation;
-use App\Structure;
+namespace Proto\Navigation;
+use Proto\Structure;
 
 /**
  * Class Navigation
- * @package App\Navigation
+ * @package Proto\Navigation
  */
 class Navigation
 {

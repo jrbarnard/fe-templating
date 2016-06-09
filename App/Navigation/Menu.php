@@ -1,9 +1,9 @@
 <?php
-namespace App\Navigation;
+namespace Proto\Navigation;
 
 /**
  * Abstract Class Menu
- * @package App\Navigation
+ * @package Proto\Navigation
  */
 abstract class Menu
 {

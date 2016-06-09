@@ -1,10 +1,10 @@
 <?php
-namespace App\Helpers;
+namespace Proto\Helpers;
 
 /**
  * Class File
  * Helper for file operations
- * @package App\Helpers
+ * @package Proto\Helpers
  */
 class File
 {

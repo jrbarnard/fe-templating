@@ -1,9 +1,9 @@
 <?php
-namespace App\Navigation;
+namespace Proto\Navigation;
 
 /**
  * Class RecursiveMenu
- * @package App\Navigation
+ * @package Proto\Navigation
  */
 class RecursiveMenu extends Menu
 {

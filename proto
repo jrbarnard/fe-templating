@@ -5,7 +5,7 @@
  */
 require __DIR__ . '/vendor/autoload.php';
 
-use App\App;
+use Proto\App;
 
 // get the application instance
 $app = App::getInstance();

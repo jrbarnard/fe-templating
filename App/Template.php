@@ -1,8 +1,7 @@
 <?php
+namespace Proto;
 
-namespace App;
-
-use App\Exceptions\NotFoundException;
+use Proto\Exceptions\NotFoundException;
 
 /**
  * Class Template
@@ -18,7 +17,7 @@ class Template
 
     /**
      * Template constructor.
-     * @param \App\Page $page
+     * @param \Proto\Page $page
      * @throws NotFoundException
      */
     public function __construct(Page $page)
@@ -69,7 +68,7 @@ class Template
 
     /**
      * Method that takes the current page and builds up the template object for it
-     * @param \App\Page $page
+     * @param \Proto\Page $page
      * @return Template
      */
     public static function build(Page $page)
@@ -79,7 +78,7 @@ class Template
 
     /**
      * Method to get the content for a page
-     * @param \App\Page $page
+     * @param \Proto\Page $page
      * @return array of variables
      */
     private static function getContent(Page $page) {

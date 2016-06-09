@@ -1,6 +1,5 @@
 <?php
-
-namespace App;
+namespace Proto;
 
 use \InvalidArgumentException;
 
