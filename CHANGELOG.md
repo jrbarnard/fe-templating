@@ -6,6 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Changelog
 - Basic use of symfony console component to clean up commands
+- Renamed namespace to from App to Proto, ready to move to separate composer package
+- Mit license
 
 ## [1.0.1] - 2016-06-08
 ### Fixed
