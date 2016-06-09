@@ -1,10 +1,10 @@
 <?php
-namespace App;
+namespace Proto;
 
 use Whoops;
 use Dotenv\Dotenv;
-use App\Console\Console;
-use App\Navigation\Navigation;
+use Proto\Console\Console;
+use Proto\Navigation\Navigation;
 use Symfony\Component\Console\Application;
 
 /**

@@ -1,6 +1,5 @@
 <?php
-
-namespace App;
+namespace Proto;
 
 use \Twig_Loader_Filesystem;
 use \Twig_Environment;

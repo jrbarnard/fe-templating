@@ -1,5 +1,5 @@
 <?php
-namespace App\Navigation;
+namespace Proto\Navigation;
 
 class BreadcrumbMenu extends Menu
 {

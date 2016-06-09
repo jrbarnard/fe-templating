@@ -1,9 +1,9 @@
 <?php
-namespace App\Console;
+namespace Proto\Console;
 
-use App\Console\Commands\Serve;
-use App\Console\Commands\CacheClear;
-use App\Console\Commands\BaseCommand;
+use Proto\Console\Commands\Serve;
+use Proto\Console\Commands\CacheClear;
+use Proto\Console\Commands\BaseCommand;
 use Symfony\Component\Console\Application;
 
 class Console

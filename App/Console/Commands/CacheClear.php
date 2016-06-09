@@ -1,7 +1,7 @@
 <?php
-namespace App\Console\Commands;
+namespace Proto\Console\Commands;
 
-use App\Helpers\File;
+use Proto\Helpers\File;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

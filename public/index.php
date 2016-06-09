@@ -10,7 +10,7 @@
  */
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-use \App\App;
+use \Proto\App;
 
 $app = App::getInstance();
 $app->load();
