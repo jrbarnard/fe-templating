@@ -1,6 +1,5 @@
 <?php
-
-namespace App\Exceptions;
+namespace Proto\Exceptions;
 
 use \Exception;
 

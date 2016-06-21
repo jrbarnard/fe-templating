@@ -4,7 +4,8 @@
     "require": {
         "twig/twig": "^1.24",
         "twbs/bootstrap": "^3.3",
-        "vlucas/phpdotenv": "^2.2"
+        "vlucas/phpdotenv": "^2.2",
+        "symfony/console": "^3.1"
     },
     "require-dev": {
         "filp/whoops": "^2.1",
@@ -17,7 +18,7 @@
         }
     ],
     "autoload": {
-        "psr-4": {"App\\": "App/"},
+        "psr-4": {"Proto\\": "App/"},
         "files": ["App/Helpers/Functions.php"]
     }
 

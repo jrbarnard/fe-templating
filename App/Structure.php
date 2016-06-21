@@ -1,9 +1,8 @@
 <?php
-
-namespace App;
+namespace Proto;
 
 use \Exception;
-use App\Exceptions\NotFoundException;
+use Proto\Exceptions\NotFoundException;
 
 /**
  * Class Structure
