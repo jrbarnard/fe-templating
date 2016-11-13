@@ -1,5 +1,5 @@
 {
-    "name": "jamesbarnard/fe-templating",
+    "name": "jrbarnard/proto",
     "description": "Front end templating for rapidly developing prototypes",
     "require": {
         "twig/twig": "^1.24",
