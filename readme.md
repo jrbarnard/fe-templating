@@ -28,8 +28,14 @@ This project is made to help rapid development of front end website prototypes w
 
 ## <a id="projectsetup">Project setup</a> ##
 
+Composer project install:
+1. composer create-project jrbarnard/proto your-project-name --prefer-dist
+2. This will run composer install for you.
+Or:
 1. Clone / download the framework into your project directory.
 2. Run composer install in the project root, if you don't have composer download [here](https://getcomposer.org/)
+
+After either:
 3. Run a webserver and point it to the project directory
  - You can either do this by using Wamp, Mamp, Xampp, Vagrant etc.
  - Or by running the utility helper (only available in php 5.4+):
