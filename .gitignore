@@ -9,3 +9,6 @@
 
 #vagrant
 /.vagrant
+
+#misc
+.DS_Store
